@@ -22,7 +22,23 @@ end
 
 M.hello = function()
   local message = module.my_first_function()
-  vim.api.nvim_echo({{message, "None"}}, true, {})
+  local buf = vim.api.nvim_create_buf(false, true) -- 新しいバッファを作成
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {"Hello World!"}) -- バッファにテキストを設定
+
+  -- フローティングウィンドウのオプション
+  local opts = {
+    relative = "editor",
+    width = 20,
+    height = 2,
+    col = math.floor((vim.o.columns - 20) / 2),
+    row = math.floor((vim.o.lines - 2) / 2),
+    anchor = "NW",
+    style = "minimal",
+    border = "rounded",
+  }
+
+  -- フローティングウィンドウを開く
+  vim.api.nvim_open_win(buf, true, opts)
 end
 
 return M
