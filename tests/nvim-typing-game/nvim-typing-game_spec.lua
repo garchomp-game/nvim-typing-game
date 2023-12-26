@@ -1,4 +1,4 @@
-local plugin = require("plugin_name")
+local plugin = require("nvim-typing-game")
 
 describe("setup", function()
   it("works with default", function()
