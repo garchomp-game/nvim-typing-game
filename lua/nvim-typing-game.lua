@@ -21,7 +21,8 @@ M.setup = function(args)
 end
 
 M.hello = function()
-  module.my_first_function()
+  local message = module.my_first_function()
+  vim.api.nvim_echo({{message, "None"}}, true, {})
 end
 
 return M
