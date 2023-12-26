@@ -23,7 +23,7 @@ end
 M.hello = function()
   local message = module.my_first_function()
   local buf = vim.api.nvim_create_buf(false, true) -- 新しいバッファを作成
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {"Hello World!"}) -- バッファにテキストを設定
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {message}) -- バッファにテキストを設定
 
   -- フローティングウィンドウのオプション
   local opts = {
