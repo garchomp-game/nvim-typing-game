@@ -1,0 +1,17 @@
+@startgantt
+Project starts 2023/12/29
+saturday are closed
+sunday are closed
+
+[ユーザー入力に基づいてゲームが正しく進行する] lasts 3 days
+[全ての入力が完了した後にゲームが終了し、元のバッファに戻る] starts at [ユーザー入力に基づいてゲームが正しく進行する]'s end and lasts 3 days
+[タイピングエラーが正しく処理される] starts at [全ての入力が完了した後にゲームが終了し、元のバッファに戻る]'s end and lasts 2 days
+[正しい入力で進行状況が更新される] starts at [タイピングエラーが正しく処理される]'s end and lasts 2 days
+[スコアや成績が正しく計算される] starts at [正しい入力で進行状況が更新される]'s end and lasts 3 days
+[ゲームの一時停止と再開が可能] starts at [スコアや成績が正しく計算される]'s end and lasts 2 days
+[異なるバッファでゲームが正しく機能する] starts at [ゲームの一時停止と再開が可能]'s end and lasts 3 days
+
+[品質確認テスト] starts at [異なるバッファでゲームが正しく機能する]'s end and lasts 5 days
+[リリース] starts at [品質確認テスト]'s end and lasts 1 day
+[プロジェクト完了] happens at [リリース]'s end
+@endgantt
