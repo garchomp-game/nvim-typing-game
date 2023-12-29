@@ -1,7 +1,5 @@
 @startgantt
 Project starts 2023/12/29
-saturday are closed
-sunday are closed
 
 [ユーザー入力に基づいてゲームが正しく進行する] lasts 3 days
 [全ての入力が完了した後にゲームが終了し、元のバッファに戻る] starts at [ユーザー入力に基づいてゲームが正しく進行する]'s end and lasts 3 days
