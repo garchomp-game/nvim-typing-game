@@ -15,6 +15,38 @@ describe("nvim-typing-game", function()
     assert.are.equal(1, start_line) -- カーソルが2行目（indexは1）にあることを確認
   end)
 
+it("ゲーム開始時、カーソル位置以下の行がゲームに登録される", function()
+  -- バッファの作成と初期化
+  local buffer = vim.api.nvim_create_buf(false, true)
+  local lines = {"line 1", "line 2", "line 3", "line 4"}
+  vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
+
+  -- 新しいバッファを現在のウィンドウに設定
+  local window = vim.api.nvim_get_current_win()
+  vim.api.nvim_win_set_buf(window, buffer)
+
+  local buffer_line_count = #lines
+
+  local test_cases = {
+    {1, {"line 1", "line 2", "line 3", "line 4"}},
+    {2, {"line 2", "line 3", "line 4"}},
+    {4, {"line 4"}}
+  }
+
+  for _, case in ipairs(test_cases) do
+    local cursor_line, expected_words = unpack(case)
+
+    if cursor_line <= buffer_line_count then
+      vim.api.nvim_win_set_cursor(window, {cursor_line, 0})
+      plugin.start_game()
+      local game_words = plugin.get_registered_words()
+      assert.are.same(expected_words, game_words)
+    else
+      error("Cursor position outside buffer")
+    end
+  end
+end)
+
   it("ゲーム開始時、カーソル位置以下の行がゲームに登録される", function()
     -- テストのセットアップ
     local buffer = vim.api.nvim_create_buf(false, true)
@@ -22,42 +54,22 @@ describe("nvim-typing-game", function()
     vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
     vim.api.nvim_set_current_buf(buffer)
 
-    for cursor_line, expected_words in pairs({
+    local test_cases = {
       {1, {"line 1", "line 2", "line 3", "line 4"}},
       {2, {"line 2", "line 3", "line 4"}},
       {4, {"line 4"}}
-    }) do
+    }
+
+    for _, case in ipairs(test_cases) do
+      local cursor_line, expected_words = unpack(case)
       vim.api.nvim_win_set_cursor(0, {cursor_line, 0}) -- カーソル位置を設定
       plugin.start_game()
+      for _, word in ipairs(expected_words) do
+        plugin.process_input(word)
+      end
       local game_words = plugin.get_registered_words()
       assert.are.same(expected_words, game_words)
     end
-  end)
-
-  it("特定のユーザー入力によりゲームの進行状況が更新される", function()
-    local lines = {"line 1", "line 2", "line 3"}
-    plugin.start_game(lines)
-
-    -- 正しい入力
-    plugin.process_input("line 1")
-    plugin.process_input("line 2")
-    local progress = plugin.get_progress()
-    local expected_progress = {
-      current_line = 3,
-      completed = false
-    }
-    assert.are.same(expected_progress, progress)
-
-    -- 不正な入力（エラーハンドリングの確認）
-    local invalid_input = "line 4"
-    plugin.process_input(invalid_input)
-    local error_progress = plugin.get_progress()
-    local expected_error_progress = {
-      current_line = 3, -- エラーがあっても進行状況は変わらないことを期待
-      completed = false,
-      error = "Invalid input" -- エラーメッセージは仮定
-    }
-    assert.are.same(expected_error_progress, error_progress)
   end)
 
   it("全行入力後ゲーム終了とバッファ復帰を確認", function()

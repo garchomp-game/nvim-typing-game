@@ -23,4 +23,8 @@ M.is_game_over = function()
   return is_over
 end
 
+M.get_registered_words = function()
+  return game_lines
+end
+
 return M

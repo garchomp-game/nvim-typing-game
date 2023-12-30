@@ -11,7 +11,7 @@ M.start_game = function()
   game_buffer = vim.api.nvim_get_current_buf()
 
   local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local start_line = cursor_pos[1] - 1  -- 0-indexed
+  local start_line = cursor_pos[1] - 1
   local lines = vim.api.nvim_buf_get_lines(0, start_line, -1, false)
 
   module.init_game(lines)
@@ -58,6 +58,10 @@ M.process_input = function(line)
     end
     vim.api.nvim_set_current_buf(game_buffer)
   end
+end
+
+M.get_registered_words = function()
+  return module.get_registered_words()
 end
 
 return M
