@@ -1,7 +1,7 @@
 local plugin = require("nvim-typing-game")
 
 describe("nvim-typing-game", function()
-  it("現在のカーソル位置から行を正しく取得する", function()
+  it("カーソルがN行目にある場合、0-indexedでN-1を返す", function()
     -- テストのセットアップ
     local buffer = vim.api.nvim_create_buf(false, true)
     local lines = {"line 1", "line 2", "line 3"}
@@ -15,44 +15,52 @@ describe("nvim-typing-game", function()
     assert.are.equal(1, start_line) -- カーソルが2行目（indexは1）にあることを確認
   end)
 
-  it("ゲーム開始コマンドでバッファの行をゲームに登録する", function()
+  it("ゲーム開始時、カーソル位置以下の行がゲームに登録される", function()
     -- テストのセットアップ
     local buffer = vim.api.nvim_create_buf(false, true)
     local lines = {"line 1", "line 2", "line 3", "line 4"}
     vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
     vim.api.nvim_set_current_buf(buffer)
-    vim.api.nvim_win_set_cursor(0, {2, 0}) -- 2行目にカーソルを設定
 
-    -- ゲーム開始コマンドの実行（仮）
-    plugin.start_game()
-
-    -- 登録されたワードを検証（仮）
-    local expected_words = {"line 2", "line 3", "line 4"}
-    local game_words = plugin.get_registered_words() -- ゲームに登録されたワードを取得する関数
-    assert.are.same(expected_words, game_words)
+    for cursor_line, expected_words in pairs({
+      {1, {"line 1", "line 2", "line 3", "line 4"}},
+      {2, {"line 2", "line 3", "line 4"}},
+      {4, {"line 4"}}
+    }) do
+      vim.api.nvim_win_set_cursor(0, {cursor_line, 0}) -- カーソル位置を設定
+      plugin.start_game()
+      local game_words = plugin.get_registered_words()
+      assert.are.same(expected_words, game_words)
+    end
   end)
 
-  it("ユーザー入力に基づいてゲームが正しく進行する", function()
-    -- ゲームの初期化
+  it("特定のユーザー入力によりゲームの進行状況が更新される", function()
     local lines = {"line 1", "line 2", "line 3"}
     plugin.start_game(lines)
 
-    -- ユーザー入力をシミュレート
-    -- 仮に、プラグインがユーザー入力を処理する関数を持っているとします
+    -- 正しい入力
     plugin.process_input("line 1")
     plugin.process_input("line 2")
-
-    -- ゲームの進行状況の検証
-    -- 進行状況を取得する関数を使用することを想定します
     local progress = plugin.get_progress()
     local expected_progress = {
       current_line = 3,
       completed = false
     }
     assert.are.same(expected_progress, progress)
+
+    -- 不正な入力（エラーハンドリングの確認）
+    local invalid_input = "line 4"
+    plugin.process_input(invalid_input)
+    local error_progress = plugin.get_progress()
+    local expected_error_progress = {
+      current_line = 3, -- エラーがあっても進行状況は変わらないことを期待
+      completed = false,
+      error = "Invalid input" -- エラーメッセージは仮定
+    }
+    assert.are.same(expected_error_progress, error_progress)
   end)
 
-  it("全ての入力が完了した後にゲームが終了し、元のバッファに戻る", function()
+  it("全行入力後ゲーム終了とバッファ復帰を確認", function()
     -- 元のバッファのハンドルを保存
     local original_buffer_handle = vim.api.nvim_get_current_buf()
 
@@ -71,26 +79,43 @@ describe("nvim-typing-game", function()
     -- 元のバッファに戻っていることの検証
     local current_buffer = vim.api.nvim_get_current_buf()
     assert.are.equal(original_buffer_handle, current_buffer)
+
+    -- 追加: 全ての行が正確に入力されたことの検証
+    -- 全ての行が入力された後のゲームの状態を確認
+    local final_progress = plugin.get_progress()
+    local expected_final_progress = {
+      current_line = #lines + 1,  -- 全ての行が入力された後、行数+1の位置にあるべき
+      completed = true           -- ゲームが完了していることを確認
+    }
+    assert.are.same(expected_final_progress, final_progress)
   end)
 
-  it("タイピングエラーが正しく処理される", function()
+  it("誤入力後のエラーカウント増加とゲーム継続を確認", function()
     -- ゲームの初期化
     local lines = {"line 1", "line 2", "line 3"}
     plugin.start_game(lines)
 
-    -- 誤った入力をシミュレート
-    plugin.process_input("wrong input")
+    -- 正しい入力と誤った入力のシミュレート
+    plugin.process_input("line 1")  -- 正しい入力
+    plugin.process_input("wrong input")  -- 誤った入力
 
     -- エラー処理の検証
-    -- ゲームがエラーを正しく記録しているか確認
     local error_count = plugin.get_error_count()
-    assert.is_true(error_count > 0)
+    assert.are.equal(1, error_count)  -- 1つのエラーが記録されていることを確認
 
     -- ゲームがまだ終了していないことを確認
     assert.is_false(plugin.is_game_over())
+
+    -- 追加: 誤った入力後の進行状況を検証
+    local progress_after_error = plugin.get_progress()
+    local expected_progress_after_error = {
+      current_line = 2,  -- エラー後も次の行に進んでいることを確認
+      completed = false  -- ゲームがまだ完了していないことを確認
+    }
+    assert.are.same(expected_progress_after_error, progress_after_error)
   end)
 
-  it("正しい入力で進行状況が更新される", function()
+  it("正入力による進行状況の更新を検証", function()
     -- ゲームの初期化
     local lines = {"line 1", "line 2", "line 3"}
     plugin.start_game(lines)
@@ -99,13 +124,24 @@ describe("nvim-typing-game", function()
     plugin.process_input("line 1")
 
     -- 進行状況の検証
-    -- ゲームの進行状況が適切に更新されているか確認
     local progress = plugin.get_progress()
     local expected_progress = {
       current_line = 2,  -- 次の行に進んでいることを確認
       completed = false  -- ゲームがまだ完了していないことを確認
     }
     assert.are.same(expected_progress, progress)
+
+    -- 追加: さらに進行した後の状況を検証
+    plugin.process_input("line 2")
+    local progress_after_second_input = plugin.get_progress()
+    local expected_progress_after_second_input = {
+      current_line = 3,  -- 次の行に進んでいることを確認
+      completed = false  -- ゲームがまだ完了していないことを確認
+    }
+    assert.are.same(
+      expected_progress_after_second_input,
+      progress_after_second_input
+    )
   end)
 
   it("スコアや成績が正しく計算される", function()
@@ -113,21 +149,31 @@ describe("nvim-typing-game", function()
     local lines = {"line 1", "line 2", "line 3"}
     plugin.start_game(lines)
 
-    -- 入力をシミュレート
+    -- 入力をシミュレート（正確な入力と誤入力を含む）
     plugin.process_input("line 1")
+    plugin.process_input("wrong input")  -- 誤った入力
     plugin.process_input("line 2")
 
     -- スコアや成績の計算の検証
     local score = plugin.get_score()
-    local expected_score = 100 -- 仮に、完璧なタイピングで最高スコアを達成した場合
-    assert.are.equal(expected_score, score)
+    assert.is_true(score >= 0 and score <= 100)  -- スコアが0から100の間であることを確認
 
     local grade = plugin.get_grade()
-    local expected_grade = "A" -- 仮に、全ての入力が正確だった場合の成績
-    assert.are.equal(expected_grade, grade)
+    assert.is_true(grade == "A" or grade == "B" or grade == "C" or grade == "D" or grade == "F")  -- 成績がAからFのいずれかであることを確認
+
+    -- 追加: エラー発生時のスコアの減点を確認
+    local error_deduction = plugin.get_error_deduction()
+    assert.is_true(error_deduction > 0)  -- エラーが発生した場合、スコアは減点される
+
+    -- 追加: ストレステスト（高速連続入力）
+    for i = 1, 100 do
+      plugin.process_input("line " .. tostring(i))
+    end
+    local stress_score = plugin.get_score()
+    assert.is_true(stress_score >= 0 and stress_score <= 100)  -- ストレステスト後もスコアが正常範囲内であることを確認
   end)
 
-  it("ゲームの一時停止と再開が可能", function()
+  it("ゲームの一時停止と再開が正しく機能する", function()
     -- ゲームの初期化と開始
     plugin.start_game({"line 1", "line 2", "line 3"})
 
@@ -135,31 +181,47 @@ describe("nvim-typing-game", function()
     plugin.pause_game()
     assert.is_true(plugin.is_game_paused())  -- ゲームが一時停止しているか確認
 
+    -- 追加: 一時停止中のゲーム状態変更を確認
     local paused_state = plugin.get_game_state()  -- 一時停止時の状態を取得
+    -- 一時停止中に特定の操作（例：入力）を試み、状態変更がないことを確認
+    plugin.process_input("test input during pause")
+    local paused_state_after_input = plugin.get_game_state()
+    assert.are.same(paused_state, paused_state_after_input)
 
     -- 再開のテスト
     plugin.resume_game()
     assert.is_false(plugin.is_game_paused())  -- ゲームが再開しているか確認
 
+    -- 追加: 再開後の動作を確認
     local resumed_state = plugin.get_game_state()  -- 再開後の状態を取得
-    assert.are.same(paused_state, resumed_state)  -- 一時停止前と後の状態が同じであることを確認
+    assert.are.not_same(paused_state, resumed_state)  -- 再開後の状態が異なることを確認
+    -- 再開後の入力に応じた状態変更を確認
+    plugin.process_input("line 1")
+    local resumed_state_after_input = plugin.get_game_state()
+    assert.are.not_same(resumed_state, resumed_state_after_input)
   end)
 
   it("異なるバッファでゲームが正しく機能する", function()
     local buffer1 = vim.api.nvim_create_buf(false, true)
     local buffer2 = vim.api.nvim_create_buf(false, true)
 
+    -- バッファ1のセットアップ
     vim.api.nvim_buf_set_lines(buffer1, 0, -1, false, {"buffer1 line 1", "buffer1 line 2"})
-    vim.api.nvim_buf_set_lines(buffer2, 0, -1, false, {"buffer2 line 1", "buffer2 line 2"})
-
-    -- バッファ1でのゲーム開始と検証
     vim.api.nvim_set_current_buf(buffer1)
     plugin.start_game()
-    -- ここでバッファ1でのゲームの状態を検証
+    plugin.process_input("buffer1 line 1")  -- バッファ1での入力
 
-    -- バッファ2でのゲーム開始と検証
+    local state_buffer1 = plugin.get_game_state()  -- バッファ1のゲーム状態取得
+
+    -- バッファ2のセットアップ
+    vim.api.nvim_buf_set_lines(buffer2, 0, -1, false, {"buffer2 line 1", "buffer2 line 2"})
     vim.api.nvim_set_current_buf(buffer2)
     plugin.start_game()
-    -- ここでバッファ2でのゲームの状態を検証
+    plugin.process_input("buffer2 line 1")  -- バッファ2での入力
+
+    local state_buffer2 = plugin.get_game_state()  -- バッファ2のゲーム状態取得
+
+    -- 両バッファの状態が独立していることを確認
+    assert.are.not_same(state_buffer1, state_buffer2)
   end)
 end)
