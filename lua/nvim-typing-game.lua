@@ -33,11 +33,11 @@ M.start_game = function()
       winhighlight = "Normal:Normal,FloatBorder:Teal",
     },
   }, {
-    prompt = "> ",
-    on_submit = function(value)
-      M.process_input(value)
-    end,
-  })
+      prompt = "> ",
+      on_submit = function(value)
+        M.process_input(value)
+      end,
+    })
 
   -- ポップアップの表示
   input:mount()
@@ -50,13 +50,21 @@ M.start_game = function()
   popup = input
 end
 
+M.is_game_over = function()
+  return module.is_game_over()
+end
+
 M.process_input = function(line)
   module.process_input(line)
   if module.is_game_over() then
     if popup then
       popup:unmount()
     end
-    vim.api.nvim_set_current_buf(game_buffer)
+
+    if game_buffer and type(game_buffer) == 'number' then
+      vim.api.nvim_set_current_buf(game_buffer)
+    else
+    end
   end
 end
 

@@ -1,5 +1,4 @@
 local plugin = require("nvim-typing-game")
-
 describe("nvim-typing-game", function()
   it("カーソルがN行目にある場合、0-indexedでN-1を返す", function()
     -- テストのセットアップ
@@ -15,37 +14,40 @@ describe("nvim-typing-game", function()
     assert.are.equal(1, start_line) -- カーソルが2行目（indexは1）にあることを確認
   end)
 
-it("ゲーム開始時、カーソル位置以下の行がゲームに登録される", function()
-  -- バッファの作成と初期化
-  local buffer = vim.api.nvim_create_buf(false, true)
-  local lines = {"line 1", "line 2", "line 3", "line 4"}
-  vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
+  it("ゲーム開始時、カーソル位置以下の行がゲームに登録される", function()
+    -- バッファの作成と初期化
+    local buffer = vim.api.nvim_create_buf(false, true)
+    local lines = {"line 1", "line 2", "line 3", "line 4"}
+    vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
 
-  -- 新しいバッファを現在のウィンドウに設定
-  local window = vim.api.nvim_get_current_win()
-  vim.api.nvim_win_set_buf(window, buffer)
+    -- 新しいバッファを現在のウィンドウに設定
+    local window = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_buf(window, buffer)
 
-  local buffer_line_count = #lines
+    local buffer_line_count = #lines
 
-  local test_cases = {
-    {1, {"line 1", "line 2", "line 3", "line 4"}},
-    {2, {"line 2", "line 3", "line 4"}},
-    {4, {"line 4"}}
-  }
+    local test_cases = {
+      {1, {"line 1", "line 2", "line 3", "line 4"}},
+      {2, {"line 2", "line 3", "line 4"}},
+      {4, {"line 4"}}
+    }
 
-  for _, case in ipairs(test_cases) do
-    local cursor_line, expected_words = unpack(case)
+    for _, case in ipairs(test_cases) do
+      local cursor_line, expected_words = unpack(case)
 
-    if cursor_line <= buffer_line_count then
-      vim.api.nvim_win_set_cursor(window, {cursor_line, 0})
-      plugin.start_game()
-      local game_words = plugin.get_registered_words()
-      assert.are.same(expected_words, game_words)
-    else
-      error("Cursor position outside buffer")
+      if cursor_line <= buffer_line_count then
+        vim.api.nvim_win_set_cursor(window, {cursor_line, 0})
+        plugin.start_game()
+        local game_words = plugin.get_registered_words()
+        for _, word in ipairs(expected_words) do
+          plugin.process_input(word)
+        end
+        assert.are.same(expected_words, game_words)
+      else
+        error("Cursor position outside buffer")
+      end
     end
-  end
-end)
+  end)
 
   it("ゲーム開始時、カーソル位置以下の行がゲームに登録される", function()
     -- テストのセットアップ
