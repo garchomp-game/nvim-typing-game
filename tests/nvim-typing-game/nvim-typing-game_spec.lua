@@ -1,4 +1,5 @@
 local plugin = require("nvim-typing-game")
+local game = require("nvim-typing-game.core.game")
 describe("nvim-typing-game", function()
   it("カーソルがN行目にある場合、0-indexedでN-1を返す", function()
     -- テストのセットアップ
@@ -38,10 +39,10 @@ describe("nvim-typing-game", function()
       if cursor_line <= buffer_line_count then
         vim.api.nvim_win_set_cursor(window, {cursor_line, 0})
         plugin.start_game()
-        local game_words = plugin.get_registered_words()
         for _, word in ipairs(expected_words) do
-          plugin.process_input(word)
+          game.process_input(word)
         end
+        local game_words = game.get_registered_words()
         assert.are.same(expected_words, game_words)
       else
         error("Cursor position outside buffer")

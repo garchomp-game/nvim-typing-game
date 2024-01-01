@@ -1,16 +1,17 @@
+-- core/game.lua
 local M = {}
 
 local game_lines = nil
 local current_line = 1
 local is_over = false
 
-M.init_game = function(lines)
+function M.init_game(lines)
   game_lines = lines
   current_line = 1
   is_over = false
 end
 
-M.process_input = function(line)
+function M.process_input(line)
   if game_lines ~= nil and game_lines[current_line] == line then
     current_line = current_line + 1
     if current_line > #game_lines then
@@ -19,11 +20,11 @@ M.process_input = function(line)
   end
 end
 
-M.is_game_over = function()
+function M.is_game_over()
   return is_over
 end
 
-M.get_registered_words = function()
+function M.get_registered_words()
   return game_lines
 end
 
