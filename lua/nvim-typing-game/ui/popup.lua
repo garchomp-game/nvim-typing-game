@@ -4,9 +4,16 @@ local Popup = require("nui.popup")
 
 local M = {}
 
+local function calculate_popup_position(popup_height)
+  local win_height = vim.api.nvim_win_get_height(0)
+  local center_row = math.floor(win_height / 2)
+  local position_row = center_row - math.floor(popup_height / 2)
+  return { row = position_row, col = "50%" }
+end
+
 function M.show_input_popup(on_input_submit)
   local input_popup = nui_input({
-    position = "20%",
+    position = calculate_popup_position(10),
     size = { width = 50 },
     border = { style = "rounded" },
     win_options = { winhighlight = "Normal:Normal,FloatBorder:Teal" },
@@ -21,11 +28,9 @@ end
 
 -- ui/popup.lua の更新部分
 function M.show_text_popup(current_line, text_lines)
-  local screen_height = vim.api.nvim_win_get_height(0)
-  local popup_height = math.floor(screen_height * 0.5)
   local text_popup = Popup({
-    position = "20%",
-    size = { width = 50, height = popup_height },
+    position = calculate_popup_position(0),
+    size = { width = 50, height = 20 },
     border = { style = "rounded" },
   })
 

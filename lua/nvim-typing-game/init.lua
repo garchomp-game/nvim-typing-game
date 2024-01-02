@@ -6,7 +6,9 @@ local input_popup
 local text_popup
 local current_line = 1
 
-local function on_input_submit(value)
+local M = {}
+
+function M.on_input_submit(value)
   local is_correct = game_core.process_input(value)
   if is_correct then
     current_line = current_line + 1
@@ -21,7 +23,6 @@ local function on_input_submit(value)
   end
 end
 
-local M = {}
 
 function M.start_game()
   local lines = vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, -1, false)

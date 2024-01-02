@@ -1,5 +1,6 @@
 local plugin = require("nvim-typing-game")
 local game = require("nvim-typing-game.core.game")
+
 describe("nvim-typing-game", function()
   it("カーソルがN行目にある場合、0-indexedでN-1を返す", function()
     -- テストのセットアップ
@@ -15,70 +16,17 @@ describe("nvim-typing-game", function()
     assert.are.equal(1, start_line) -- カーソルが2行目（indexは1）にあることを確認
   end)
 
-  -- it("ゲーム開始時、カーソル位置以下の行がゲームに登録される", function()
-  --   -- バッファの作成と初期化
-  --   local buffer = vim.api.nvim_create_buf(false, true)
-  --   local lines = {"line 1", "line 2", "line 3", "line 4"}
-  --   vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
-  --
-  --   -- 新しいバッファを現在のウィンドウに設定
-  --   local window = vim.api.nvim_get_current_win()
-  --   vim.api.nvim_win_set_buf(window, buffer)
-  --
-  --   local buffer_line_count = #lines
-  --
-  --   local test_cases = {
-  --     {1, {"line 1", "line 2", "line 3", "line 4"}},
-  --     {2, {"line 2", "line 3", "line 4"}},
-  --     {4, {"line 4"}}
-  --   }
-  --
-  --   -- 省略されたテストセットアップの部分
-  --
-  --   for _, case in ipairs(test_cases) do
-  --     local cursor_line, expected_words = unpack(case)
-  --
-  --     if cursor_line <= buffer_line_count then
-  --       vim.api.nvim_win_set_cursor(window, {cursor_line, 0})
-  --       plugin.start_game()
-  --       for _, word in ipairs(expected_words) do
-  --         plugin.process_input(word)
-  --       end
-  --       local game_words = plugin.get_registered_words()
-  --       assert.are.same(expected_words, game_words)
-  --     else
-  --       error("Cursor position outside buffer")
-  --     end
-  --   end
-  -- end)
-
-  before_each(function()
-    -- テスト前のセットアップ
-    vim.api.nvim_buf_set_lines(0, 0, -1, false, {"line 1", "line 2", "line 3", "line 4"})
-    vim.api.nvim_win_set_cursor(0, {1, 0})
-    plugin.start_game()
-  end)
-
   it("ゲーム開始時、カーソル位置以下の行がゲームに登録される", function()
-    local expected_words = {"line 1", "line 2", "line 3", "line 4"}
-    for _, word in ipairs(expected_words) do
-      -- キー入力をシミュレート
-      vim.api.nvim_input('i' .. word .. '<CR>')
-    end
-
-    -- ゲームの状態を検証
-    assert.is_true(game.is_game_over())
-    local registered_words = game.get_registered_words()
-    assert.are.same(expected_words, registered_words)
-  end)
-
-
-  it("ゲーム開始時、カーソル位置以下の行がゲームに登録される", function()
-    -- テストのセットアップ
+    -- バッファの作成と初期化
     local buffer = vim.api.nvim_create_buf(false, true)
     local lines = {"line 1", "line 2", "line 3", "line 4"}
     vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
-    vim.api.nvim_set_current_buf(buffer)
+
+    -- 新しいバッファを現在のウィンドウに設定
+    local window = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_buf(window, buffer)
+
+    local buffer_line_count = #lines
 
     local test_cases = {
       {1, {"line 1", "line 2", "line 3", "line 4"}},
@@ -86,15 +34,22 @@ describe("nvim-typing-game", function()
       {4, {"line 4"}}
     }
 
+    -- 省略されたテストセットアップの部分
+
     for _, case in ipairs(test_cases) do
       local cursor_line, expected_words = unpack(case)
-      vim.api.nvim_win_set_cursor(0, {cursor_line, 0}) -- カーソル位置を設定
-      plugin.start_game()
-      for _, word in ipairs(expected_words) do
-        plugin.process_input(word)
+
+      if cursor_line <= buffer_line_count then
+        vim.api.nvim_win_set_cursor(window, {cursor_line, 0})
+        plugin.start_game()
+        for _, word in ipairs(expected_words) do
+          plugin.on_input_submit(word)
+        end
+        local game_words = game.get_registered_words()
+        assert.are.same(expected_words, game_words)
+      else
+        error("Cursor position outside buffer")
       end
-      local game_words = plugin.get_registered_words()
-      assert.are.same(expected_words, game_words)
     end
   end)
 
