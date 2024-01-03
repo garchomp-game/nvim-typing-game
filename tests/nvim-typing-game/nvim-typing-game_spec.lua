@@ -63,11 +63,11 @@ describe("nvim-typing-game", function()
 
     -- 全ての行を入力
     for _, line in ipairs(lines) do
-      plugin.process_input(line)
+      plugin.on_input_submit(line)
     end
 
     -- ゲーム終了の検証
-    assert.is_true(plugin.is_game_over())
+    assert.is_true(game.is_game_over())
 
     -- 元のバッファに戻っていることの検証
     local current_buffer = vim.api.nvim_get_current_buf()

@@ -1,5 +1,6 @@
+local custom_input_module = require('nvim-typing-game.ui.components.custom_input_module') -- モジュール名は適切に置き換えてください
+
 -- ui/popup.lua
-local nui_input = require("nui.input")
 local Popup = require("nui.popup")
 
 local M = {}
@@ -12,18 +13,7 @@ local function calculate_popup_position(popup_height)
 end
 
 function M.show_input_popup(on_input_submit)
-  local input_popup = nui_input({
-    position = calculate_popup_position(10),
-    size = { width = 50 },
-    border = { style = "rounded" },
-    win_options = { winhighlight = "Normal:Normal,FloatBorder:Teal" },
-  }, {
-    prompt = "> ",
-    on_submit = on_input_submit
-  })
-
-  input_popup:mount()
-  return input_popup
+  return custom_input_module.custom_input(on_input_submit)
 end
 
 -- ui/popup.lua の更新部分
