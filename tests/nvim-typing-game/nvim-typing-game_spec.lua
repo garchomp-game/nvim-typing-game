@@ -117,22 +117,24 @@ describe("nvim-typing-game", function()
     plugin.start_game(lines)
 
     -- 正しい入力をシミュレート
-    plugin.process_input("line 1")
+    plugin.on_input_submit("line 1")
 
     -- 進行状況の検証
     local progress = plugin.get_progress()
     local expected_progress = {
       current_line = 2,  -- 次の行に進んでいることを確認
-      completed = false  -- ゲームがまだ完了していないことを確認
+      completed = false,  -- ゲームがまだ完了していないことを確認
+      total_lines = 3
     }
     assert.are.same(expected_progress, progress)
 
     -- 追加: さらに進行した後の状況を検証
-    plugin.process_input("line 2")
+    plugin.on_input_submit("line 2")
     local progress_after_second_input = plugin.get_progress()
     local expected_progress_after_second_input = {
       current_line = 3,  -- 次の行に進んでいることを確認
-      completed = false  -- ゲームがまだ完了していないことを確認
+      completed = false,  -- ゲームがまだ完了していないことを確認
+      total_lines = 3
     }
     assert.are.same(
       expected_progress_after_second_input,

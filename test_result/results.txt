@@ -7,37 +7,31 @@ Success	||	nvim-typing-game カーソルがN行目にある場合、0-indexedで
 Success	||	nvim-typing-game ゲーム開始時、カーソル位置以下の行がゲームに登録される	
 Success	||	nvim-typing-game 正しい入力でハイライトが次の行に移動する	
 Game Over!	
-Game Over!	
 Success	||	nvim-typing-game 全行入力後ゲーム終了とバッファ復帰を確認	
 Incorrect input, try again.	
 Success	||	nvim-typing-game 誤入力後のエラーカウント増加とゲーム継続を確認	
-Fail	||	nvim-typing-game 正入力による進行状況の更新を検証	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:120: attempt to call field 'process_input' (a nil value)
-            
-            stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:120: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:114>
-            	
+Success	||	nvim-typing-game 正入力による進行状況の更新を検証	
 Fail	||	nvim-typing-game スコアや成績が正しく計算される	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:149: attempt to call field 'process_input' (a nil value)
+            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:151: attempt to call field 'process_input' (a nil value)
             
             stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:149: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:143>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:151: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:145>
             	
 Fail	||	nvim-typing-game ゲームの一時停止と再開が正しく機能する	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:177: attempt to call field 'pause_game' (a nil value)
+            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:179: attempt to call field 'pause_game' (a nil value)
             
             stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:177: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:172>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:179: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:174>
             	
 Fail	||	nvim-typing-game 異なるバッファでゲームが正しく機能する	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:208: attempt to call field 'process_input' (a nil value)
+            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:210: attempt to call field 'process_input' (a nil value)
             
             stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:208: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:200>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:210: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:202>
             	
 	
-Success: 	5	
-Failed : 	4	
+Success: 	6	
+Failed : 	3	
 Errors : 	0	
 ========================================	
 Tests Failed. Exit: 1	

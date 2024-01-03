@@ -28,7 +28,7 @@ function M.process_input(line)
   if game_lines[current_line] == line then
     current_line = current_line + 1
     is_correct = true
-    if current_line >= #game_lines then
+    if current_line > #game_lines then
       is_over = true
       active_before_buffer()
     end
