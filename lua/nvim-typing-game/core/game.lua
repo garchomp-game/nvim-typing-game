@@ -4,8 +4,16 @@ local M = {}
 local game_lines = {}
 local current_line = 1
 local is_over = false
+local before_buffer
+
+local active_before_buffer = function()
+  -- ゲーム終了後に元のバッファに戻す
+  local current_window = vim.api.nvim_get_current_win()
+  vim.api.nvim_win_set_buf(current_window, before_buffer)
+end
 
 function M.init_game(lines)
+  before_buffer = vim.api.nvim_get_current_buf()
   game_lines = lines
   current_line = 1
   is_over = false
@@ -14,9 +22,11 @@ end
 function M.process_input(line)
   local is_correct = false
   if game_lines ~= nil and game_lines[current_line] == line then
+    current_line = current_line + 1
     is_correct = true
-    if current_line > #game_lines then
+    if current_line >= #game_lines then
       is_over = true
+      active_before_buffer()
     end
   end
   return is_correct
@@ -37,4 +47,13 @@ function M.get_registered_words()
   return game_lines
 end
 
+function M.get_game_lines_length()
+  return #game_lines
+end
+
+function M.get_current_line()
+  return current_line
+end
+
 return M
+

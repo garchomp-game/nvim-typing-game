@@ -53,10 +53,12 @@ describe("nvim-typing-game", function()
 
   it("全行入力後ゲーム終了とバッファ復帰を確認", function()
     -- 元のバッファのハンドルを保存
-    local original_buffer_handle = vim.api.nvim_get_current_buf()
+    local before_buffer = vim.api.nvim_get_current_buf()
+    local buffer = vim.api.nvim_create_buf(false, true)
+    local lines = {"line 1", "line 2", "line 3"}
+    vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
 
     -- ゲームの初期化
-    local lines = {"line 1", "line 2", "line 3"}
     plugin.start_game(lines)
 
     -- 全ての行を入力
@@ -69,14 +71,16 @@ describe("nvim-typing-game", function()
 
     -- 元のバッファに戻っていることの検証
     local current_buffer = vim.api.nvim_get_current_buf()
-    assert.are.equal(original_buffer_handle, current_buffer)
+    assert.are.equal(before_buffer, current_buffer)
 
     -- 追加: 全ての行が正確に入力されたことの検証
     -- 全ての行が入力された後のゲームの状態を確認
+    -- 追加: 全ての行が正確に入力されたことの検証
     local final_progress = plugin.get_progress()
     local expected_final_progress = {
-      current_line = #lines + 1,  -- 全ての行が入力された後、行数+1の位置にあるべき
-      completed = true           -- ゲームが完了していることを確認
+      current_line = #lines + 1,
+      total_lines = #lines,
+      completed = true
     }
     assert.are.same(expected_final_progress, final_progress)
   end)

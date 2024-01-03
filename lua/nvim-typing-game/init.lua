@@ -31,7 +31,13 @@ function M.on_input_submit(value)
   ui_popup.show_input_popup(M.on_input_submit)
 end
 
-
+function M.get_progress()
+  return {
+    current_line = game_core.get_current_line(),
+    total_lines = game_core.get_game_lines_length(),  -- 全体の行数
+    completed = game_core.is_game_over()
+  }
+end
 
 function M.start_game(test_lines)
   local lines = test_lines or vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, -1, false)
