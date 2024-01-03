@@ -148,9 +148,9 @@ describe("nvim-typing-game", function()
     plugin.start_game(lines)
 
     -- 入力をシミュレート（正確な入力と誤入力を含む）
-    plugin.process_input("line 1")
-    plugin.process_input("wrong input")  -- 誤った入力
-    plugin.process_input("line 2")
+    plugin.on_input_submit("line 1")
+    plugin.on_input_submit("wrong input")  -- 誤った入力
+    plugin.on_input_submit("line 2")
 
     -- スコアや成績の計算の検証
     local score = plugin.get_score()
@@ -165,7 +165,7 @@ describe("nvim-typing-game", function()
 
     -- 追加: ストレステスト（高速連続入力）
     for i = 1, 100 do
-      plugin.process_input("line " .. tostring(i))
+      plugin.on_input_submit("line " .. tostring(i))
     end
     local stress_score = plugin.get_score()
     assert.is_true(stress_score >= 0 and stress_score <= 100)  -- ストレステスト後もスコアが正常範囲内であることを確認
@@ -182,7 +182,7 @@ describe("nvim-typing-game", function()
     -- 追加: 一時停止中のゲーム状態変更を確認
     local paused_state = plugin.get_game_state()  -- 一時停止時の状態を取得
     -- 一時停止中に特定の操作（例：入力）を試み、状態変更がないことを確認
-    plugin.process_input("test input during pause")
+    plugin.on_input_submit("test input during pause")
     local paused_state_after_input = plugin.get_game_state()
     assert.are.same(paused_state, paused_state_after_input)
 

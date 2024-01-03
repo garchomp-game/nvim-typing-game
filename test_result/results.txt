@@ -11,11 +11,12 @@ Success	||	nvim-typing-game 全行入力後ゲーム終了とバッファ復帰�
 Incorrect input, try again.	
 Success	||	nvim-typing-game 誤入力後のエラーカウント増加とゲーム継続を確認	
 Success	||	nvim-typing-game 正入力による進行状況の更新を検証	
+Incorrect input, try again.	
 Fail	||	nvim-typing-game スコアや成績が正しく計算される	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:151: attempt to call field 'process_input' (a nil value)
+            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:156: attempt to call field 'get_score' (a nil value)
             
             stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:151: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:145>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:156: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:145>
             	
 Fail	||	nvim-typing-game ゲームの一時停止と再開が正しく機能する	
             ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:179: attempt to call field 'pause_game' (a nil value)

@@ -51,4 +51,12 @@ function M.start_game(test_lines)
   ui_popup.show_input_popup(M.on_input_submit)
 end
 
+function M.get_score()
+
+end
+
+function M.get_grade()
+
+end
+
 return M
