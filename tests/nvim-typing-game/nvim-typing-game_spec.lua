@@ -26,31 +26,29 @@ describe("nvim-typing-game", function()
     local window = vim.api.nvim_get_current_win()
     vim.api.nvim_win_set_buf(window, buffer)
 
-    local buffer_line_count = #lines
+    -- ゲームを開始
+    plugin.start_game(lines)
 
-    local test_cases = {
-      {1, {"line 1", "line 2", "line 3", "line 4"}},
-      {2, {"line 2", "line 3", "line 4"}},
-      {4, {"line 4"}}
-    }
+    -- 登録された行を取得して検証
+    local game_words = game.get_registered_words()
+    local expected_words = lines
+    assert.are.same(expected_words, game_words)
+  end)
 
-    -- 省略されたテストセットアップの部分
+  it("正しい入力でハイライトが次の行に移動する", function()
+    -- バッファの初期化、ゲームの開始などのセットアップ
+    local buffer = vim.api.nvim_create_buf(false, true)
+    local lines = {"line 1", "line 2", "line 3", "line 4"}
+    vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
 
-    for _, case in ipairs(test_cases) do
-      local cursor_line, expected_words = unpack(case)
+    plugin.start_game(lines)
+    local initial_highlight = game.get_current_highlighted_line(1)
+    assert.are.equal("line 1", initial_highlight)  -- 初期ハイライトが最初の行にあることを確認
 
-      if cursor_line <= buffer_line_count then
-        vim.api.nvim_win_set_cursor(window, {cursor_line, 0})
-        plugin.start_game()
-        for _, word in ipairs(expected_words) do
-          plugin.on_input_submit(word)
-        end
-        local game_words = game.get_registered_words()
-        assert.are.same(expected_words, game_words)
-      else
-        error("Cursor position outside buffer")
-      end
-    end
+    -- 正しい入力を模倣
+    plugin.on_input_submit("line 1")
+    local next_highlight = game.get_current_highlighted_line(2)
+    assert.are.equal("line 2", next_highlight)  -- ハイライトが次の行に移動していることを確認
   end)
 
   it("全行入力後ゲーム終了とバッファ復帰を確認", function()

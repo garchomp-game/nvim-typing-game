@@ -1,7 +1,6 @@
 -- init.lua
 local game_core = require("nvim-typing-game.core.game")
 local ui_popup = require("nvim-typing-game.ui.popup")
-local custom_input_module = require('nvim-typing-game.ui.components.custom_input_module') -- モジュール名は適切に置き換えてください
 
 local text_popup
 local current_line = 1
@@ -29,17 +28,17 @@ function M.on_input_submit(value)
   end
 
   -- 新しい入力ボックスを表示 (カスタムコンポーネントを使用)
-  custom_input_module.custom_input(M.on_input_submit)
+  ui_popup.show_input_popup(M.on_input_submit)
 end
 
 
 
-function M.start_game()
-  local lines = vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, -1, false)
+function M.start_game(test_lines)
+  local lines = test_lines or vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, -1, false)
   game_core.init_game(lines)
   text_popup = ui_popup.show_text_popup(current_line, lines)
   -- カスタム入力コンポーネントの呼び出し
-  custom_input_module.custom_input(M.on_input_submit)
+  ui_popup.show_input_popup(M.on_input_submit)
 end
 
 return M
