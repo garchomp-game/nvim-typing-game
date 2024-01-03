@@ -5,6 +5,7 @@ local game_lines = {}
 local current_line = 1
 local is_over = false
 local before_buffer
+local error_count = 0
 
 local active_before_buffer = function()
   -- ゲーム終了後に元のバッファに戻す
@@ -21,13 +22,18 @@ end
 
 function M.process_input(line)
   local is_correct = false
-  if game_lines ~= nil and game_lines[current_line] == line then
+  if game_lines == nil then
+    return is_correct
+  end
+  if game_lines[current_line] == line then
     current_line = current_line + 1
     is_correct = true
     if current_line >= #game_lines then
       is_over = true
       active_before_buffer()
     end
+  else
+    error_count = error_count + 1
   end
   return is_correct
 end
@@ -53,6 +59,10 @@ end
 
 function M.get_current_line()
   return current_line
+end
+
+function M.get_error_count()
+  return error_count
 end
 
 return M

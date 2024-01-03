@@ -91,21 +91,22 @@ describe("nvim-typing-game", function()
     plugin.start_game(lines)
 
     -- 正しい入力と誤った入力のシミュレート
-    plugin.process_input("line 1")  -- 正しい入力
-    plugin.process_input("wrong input")  -- 誤った入力
+    plugin.on_input_submit("line 1")
+    plugin.on_input_submit("wrong input")
 
     -- エラー処理の検証
     local error_count = plugin.get_error_count()
     assert.are.equal(1, error_count)  -- 1つのエラーが記録されていることを確認
 
     -- ゲームがまだ終了していないことを確認
-    assert.is_false(plugin.is_game_over())
+    assert.is_false(game.is_game_over())
 
     -- 追加: 誤った入力後の進行状況を検証
     local progress_after_error = plugin.get_progress()
     local expected_progress_after_error = {
       current_line = 2,  -- エラー後も次の行に進んでいることを確認
-      completed = false  -- ゲームがまだ完了していないことを確認
+      completed = false,  -- ゲームがまだ完了していないことを確認
+      total_lines = 3
     }
     assert.are.same(expected_progress_after_error, progress_after_error)
   end)

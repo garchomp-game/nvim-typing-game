@@ -39,6 +39,10 @@ function M.get_progress()
   }
 end
 
+function M.get_error_count()
+  return game_core.get_error_count()
+end
+
 function M.start_game(test_lines)
   local lines = test_lines or vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, -1, false)
   game_core.init_game(lines)
