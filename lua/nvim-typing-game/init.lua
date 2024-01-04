@@ -3,7 +3,7 @@ local game_core = require("nvim-typing-game.core.game")
 local ui_popup = require("nvim-typing-game.ui.popup")
 
 local text_popup
-local current_line = 1
+-- local current_line = 1
 
 local M = {}
 
@@ -20,15 +20,20 @@ function M.on_input_submit(value)
   end
 
   if is_correct then
-    current_line = current_line + 1
+    -- current_line = current_line + 1
     text_popup:unmount()  -- 現在のテキストポップアップを閉じる
-    text_popup = ui_popup.show_text_popup(current_line, game_core.get_registered_words())
+    text_popup = ui_popup.show_text_popup(game_core.get_current_line(), game_core.get_registered_words())
   else
     print("Incorrect input, try again.")
   end
 
   -- 新しい入力ボックスを表示 (カスタムコンポーネントを使用)
   ui_popup.show_input_popup(M.on_input_submit)
+end
+
+function M.on_input_change(value)
+  -- ここにインクリメントする処理を実装する。必要に応じてcore/gameのコールバック関数を呼び出す
+  return value
 end
 
 function M.get_progress()
@@ -53,7 +58,7 @@ function M.start_game(test_lines)
     lines = test_lines
   end
   game_core.init_game(lines)
-  text_popup = ui_popup.show_text_popup(current_line, lines)
+  text_popup = ui_popup.show_text_popup(game_core.get_current_line(), lines)
   ui_popup.show_input_popup(M.on_input_submit)
 end
 

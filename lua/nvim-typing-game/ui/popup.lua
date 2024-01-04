@@ -11,7 +11,7 @@ local function calculate_popup_position(popup_height)
   return { row = position_row, col = "50%" }
 end
 
-function M.show_input_popup(on_input_submit)
+function M.show_input_popup(on_input_submit, on_input_change)
   local input_popup = nui_input({
     position = calculate_popup_position(10),
     size = { width = 50 },
@@ -19,7 +19,8 @@ function M.show_input_popup(on_input_submit)
     win_options = { winhighlight = "Normal:Normal,FloatBorder:Teal" },
   }, {
     prompt = "> ",
-    on_submit = on_input_submit
+    on_submit = on_input_submit,
+    on_change = on_input_change
   })
 
   input_popup:mount()

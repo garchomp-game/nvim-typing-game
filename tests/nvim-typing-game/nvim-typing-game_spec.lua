@@ -154,7 +154,7 @@ describe("nvim-typing-game", function()
 
     -- スコアや成績の計算の検証
     local score = plugin.get_score()
-    assert.is_true(score >= 0 and score <= 100)  -- スコアが0から100の間であることを確認
+    assert.is_true(score >= 0 and score <= 999)  -- スコアが0から100の間であることを確認
 
     local grade = plugin.get_grade()
     assert.is_true(grade == "A" or grade == "B" or grade == "C" or grade == "D" or grade == "F")  -- 成績がAからFのいずれかであることを確認

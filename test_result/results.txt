@@ -2,7 +2,7 @@ Starting...
 Scheduling: tests/nvim-typing-game/nvim-typing-game_spec.lua
 
 ========================================	
-Testing: 	/home/otoka/.config/nvim/pack/nvim-typing-game/tests/nvim-typing-game/nvim-typing-game_spec.lua	
+Testing: 	/home/garchomp-game/.config/nvim/pack/nvim-typing-game/tests/nvim-typing-game/nvim-typing-game_spec.lua	
 Success	||	nvim-typing-game カーソルがN行目にある場合、0-indexedでN-1を返す	
 Success	||	nvim-typing-game ゲーム開始時、カーソル位置以下の行がゲームに登録される	
 Success	||	nvim-typing-game 正しい入力でハイライトが次の行に移動する	
@@ -25,10 +25,10 @@ Fail	||	nvim-typing-game ゲームの一時停止と再開が正しく機能す�
             	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:179: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:174>
             	
 Fail	||	nvim-typing-game 異なるバッファでゲームが正しく機能する	
-            ./lua/nvim-typing-game/init.lua:48: attempt to index local 'test_lines' (a nil value)
+            ./lua/nvim-typing-game/init.lua:55: attempt to index local 'test_lines' (a nil value)
             
             stack traceback:
-            	./lua/nvim-typing-game/init.lua:48: in function 'start_game'
+            	./lua/nvim-typing-game/init.lua:55: in function 'start_game'
             	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:209: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:202>
             	
 	
