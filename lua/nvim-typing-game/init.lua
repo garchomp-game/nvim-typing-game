@@ -44,10 +44,16 @@ function M.get_error_count()
 end
 
 function M.start_game(test_lines)
-  local lines = test_lines or vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, -1, false)
+  local lines
+  -- コマンドから呼び出す場合は、引数にargsが含まれるため
+  -- argsが存在するか否かで分岐をしている。
+  if test_lines.args then
+    lines = vim.api.nvim_buf_get_lines(0, vim.api.nvim_win_get_cursor(0)[1] - 1, -1, false)
+  else
+    lines = test_lines
+  end
   game_core.init_game(lines)
   text_popup = ui_popup.show_text_popup(current_line, lines)
-  -- カスタム入力コンポーネントの呼び出し
   ui_popup.show_input_popup(M.on_input_submit)
 end
 

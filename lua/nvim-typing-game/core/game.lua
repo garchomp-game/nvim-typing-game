@@ -1,7 +1,7 @@
 -- core/game.lua
 local M = {}
 
-local game_lines = {}
+local game_lines = nil
 local current_line = 1
 local is_over = false
 local before_buffer
@@ -46,7 +46,9 @@ function M.is_game_over()
 end
 
 function M.get_current_highlighted_line(line_number)
-  return game_lines[line_number]
+  if game_lines ~= nil then
+    return game_lines[line_number]
+  end
 end
 
 function M.get_registered_words()
@@ -56,14 +58,10 @@ end
 function M.get_game_lines_length()
   return #game_lines
 end
-
 function M.get_current_line()
   return current_line
 end
-
 function M.get_error_count()
   return error_count
 end
-
 return M
-
