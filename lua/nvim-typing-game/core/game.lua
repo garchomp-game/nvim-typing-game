@@ -6,6 +6,7 @@ local current_line = 1
 local is_over = false
 local before_buffer
 local error_count = 0
+local keystroke_count = 0
 
 local active_before_buffer = function()
   -- ゲーム終了後に元のバッファに戻す
@@ -38,6 +39,13 @@ function M.process_input(line)
   return is_correct
 end
 
+function M.increment_keystroke_count()
+  keystroke_count = keystroke_count + 1
+end
+
+function M.get_keystroke_count()
+  return keystroke_count
+end
 -- core/game.lua
 function M.is_game_over()
   return is_over

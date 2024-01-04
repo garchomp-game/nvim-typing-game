@@ -3,10 +3,8 @@ local game_core = require("nvim-typing-game.core.game")
 local ui_popup = require("nvim-typing-game.ui.popup")
 
 local text_popup
--- local current_line = 1
 
 local M = {}
-
 
 -- init.lua の on_input_submit 関数
 function M.on_input_submit(value)
@@ -20,7 +18,6 @@ function M.on_input_submit(value)
   end
 
   if is_correct then
-    -- current_line = current_line + 1
     text_popup:unmount()  -- 現在のテキストポップアップを閉じる
     text_popup = ui_popup.show_text_popup(game_core.get_current_line(), game_core.get_registered_words())
   else
@@ -31,9 +28,8 @@ function M.on_input_submit(value)
   ui_popup.show_input_popup(M.on_input_submit)
 end
 
-function M.on_input_change(value)
-  -- ここにインクリメントする処理を実装する。必要に応じてcore/gameのコールバック関数を呼び出す
-  return value
+function M.on_input_change()
+  game_core.increment_keystroke_count()
 end
 
 function M.get_progress()
@@ -60,6 +56,8 @@ function M.start_game(test_lines)
   game_core.init_game(lines)
   text_popup = ui_popup.show_text_popup(game_core.get_current_line(), lines)
   ui_popup.show_input_popup(M.on_input_submit)
+
+  -- この後ここにcore/gameからkeystroke取得してuiに動的表示してデバッグする
 end
 
 function M.get_score()
