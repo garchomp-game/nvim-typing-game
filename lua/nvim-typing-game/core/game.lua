@@ -7,6 +7,7 @@ local is_over = false
 local before_buffer
 local error_count = 0
 local keystroke_count = 0
+local start_time
 
 local active_before_buffer = function()
   -- ゲーム終了後に元のバッファに戻す
@@ -14,11 +15,25 @@ local active_before_buffer = function()
   vim.api.nvim_win_set_buf(current_window, before_buffer)
 end
 
+local calculate_game_duration = function()
+  local end_time = os.time()  -- ゲーム終了時のタイムスタンプ
+  return end_time - start_time  -- 経過時間（秒単位）
+end
+
+local calculate_score = function()
+  local time = calculate_game_duration()  -- ゲームの所要時間を取得
+  local basic_score = keystroke_count - error_count  -- 正確な入力数から誤入力数を引く
+  local time_score = math.max(0, 100 - time)  -- 時間に基づいたスコア（例：100秒以下の場合、100から時間を引いた値）
+
+  return basic_score + time_score  -- 基本スコアと時間スコアを合計
+end
+
 function M.init_game(lines)
   before_buffer = vim.api.nvim_get_current_buf()
   game_lines = lines
   current_line = 1
   is_over = false
+  start_time = os.time()
 end
 
 function M.process_input(line)
@@ -31,6 +46,7 @@ function M.process_input(line)
     is_correct = true
     if current_line > #game_lines then
       is_over = true
+      calculate_score()
       active_before_buffer()
     end
   else
