@@ -41,11 +41,18 @@ end
 
 function M.increment_keystroke_count()
   keystroke_count = keystroke_count + 1
+  -- UI更新関数を呼び出す
+  require('nvim-typing-game.ui.popup').update_counter_display(keystroke_count)
 end
 
 function M.get_keystroke_count()
   return keystroke_count
 end
+
+function M.set_keystroke_count(value)
+  keystroke_count = value
+end
+
 -- core/game.lua
 function M.is_game_over()
   return is_over
@@ -72,4 +79,5 @@ end
 function M.get_error_count()
   return error_count
 end
+
 return M

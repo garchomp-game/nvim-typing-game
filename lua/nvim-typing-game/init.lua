@@ -25,11 +25,15 @@ function M.on_input_submit(value)
   end
 
   -- 新しい入力ボックスを表示 (カスタムコンポーネントを使用)
-  ui_popup.show_input_popup(M.on_input_submit)
+  ui_popup.show_input_popup(M.on_input_submit, M.on_input_change)
 end
 
+
 function M.on_input_change()
+  -- 以下、通常の処理
   game_core.increment_keystroke_count()
+  local new_count = game_core.get_keystroke_count()
+  ui_popup.update_counter_display(new_count)
 end
 
 function M.get_progress()
@@ -55,9 +59,15 @@ function M.start_game(test_lines)
   end
   game_core.init_game(lines)
   text_popup = ui_popup.show_text_popup(game_core.get_current_line(), lines)
-  ui_popup.show_input_popup(M.on_input_submit)
+  ui_popup.show_input_popup(M.on_input_submit, M.on_input_change)
 
   -- この後ここにcore/gameからkeystroke取得してuiに動的表示してデバッグする
+  local count = game_core.get_keystroke_count()
+  ui_popup.show_counter(count)
+
+  vim.schedule(function()
+    game_core.set_keystroke_count(0)
+  end)
 end
 
 function M.get_score()
