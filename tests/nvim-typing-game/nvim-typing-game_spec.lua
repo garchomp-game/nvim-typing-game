@@ -142,6 +142,7 @@ describe("nvim-typing-game", function()
     )
   end)
 
+  -- TODO: 実装中
   it("スコアや成績が正しく計算される", function()
     -- ゲームの初期化
     local lines = {"line 1", "line 2", "line 3"}
@@ -171,6 +172,7 @@ describe("nvim-typing-game", function()
     assert.is_true(stress_score >= 0 and stress_score <= 100)  -- ストレステスト後もスコアが正常範囲内であることを確認
   end)
 
+  -- TODO: 中身未実装
   it("ゲームの一時停止と再開が正しく機能する", function()
     -- ゲームの初期化と開始
     plugin.start_game({"line 1", "line 2", "line 3"})
@@ -199,6 +201,7 @@ describe("nvim-typing-game", function()
     assert.are.not_same(resumed_state, resumed_state_after_input)
   end)
 
+  -- TODO: 中身未実装
   it("異なるバッファでゲームが正しく機能する", function()
     local buffer1 = vim.api.nvim_create_buf(false, true)
     local buffer2 = vim.api.nvim_create_buf(false, true)
