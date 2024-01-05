@@ -162,8 +162,7 @@ nvim_get_current_buf()                                *nvim_get_current_buf()*
 
 `nui.input`
 
-```markdown
-### [入力](lua/nui/input)
+## [入力](lua/nui/input)
 
 ![入力 GIF](https://github.com/MunifTanjim/nui.nvim/wiki/media/input.gif)
 
@@ -212,8 +211,7 @@ end)
 
 `Popup`
 
-```markdown
-### [ポップアップ](lua/nui/popup)
+## [ポップアップ](lua/nui/popup)
 
 ![ポップアップ GIF](https://github.com/MunifTanjim/nui.nvim/wiki/media/popup.gif)
 
