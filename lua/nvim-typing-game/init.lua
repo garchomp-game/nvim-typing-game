@@ -38,7 +38,7 @@ function M.on_input_change(value)
   -- ここで位置文字ごとにcorrect_answerをsplitして合ってるかの確認を行う
   if value ~= correct_answer then
     -- エラー処理
-    game_core.increment_error_count() -- エラーカウントを増やす
+    -- game_core.increment_error_count() -- エラーカウントを増やす
     -- その他のエラーに関する処理
   end
 end
@@ -52,7 +52,7 @@ function M.get_progress()
 end
 
 function M.get_error_count()
-  return game_core.get_error_count()
+  -- return game_core.get_error_count()
 end
 
 function M.start_game(test_lines)
