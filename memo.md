@@ -159,3 +159,93 @@ nvim_get_current_buf()                                *nvim_get_current_buf()*
 戻り値: ~
     バッファハンドル
 ```
+
+`nui.input`
+
+```markdown
+### [入力](lua/nui/input)
+
+![入力 GIF](https://github.com/MunifTanjim/nui.nvim/wiki/media/input.gif)
+
+```lua
+local Input = require("nui.input")
+local event = require("nui.utils.autocmd").event
+
+local input = Input({
+  position = "50%",
+  size = {
+    width = 20,
+  },
+  border = {
+    style = "single",
+    text = {
+      top = "[Howdy?]",
+      top_align = "center",
+    },
+  },
+  win_options = {
+    winhighlight = "Normal:Normal,FloatBorder:Normal",
+  },
+}, {
+  prompt = "> ",
+  default_value = "Hello",
+  on_close = function()
+    print("Input Closed!")
+  end,
+  on_submit = function(value)
+    print("Input Submitted: " .. value)
+  end,
+})
+
+-- コンポーネントをマウント/開く
+input:mount()
+
+-- カーソルがバッファを離れたときにコンポーネントをアンマウント
+input:on(event.BufLeave, function()
+  input:unmount()
+end)
+```
+
+**[`nui.input`の詳細なドキュメントを確認する](lua/nui/input)**
+
+**[`nui.input`のWikiページを確認する](https://github.com/MunifTanjim/nui.nvim/wiki/nui.input)**
+
+`Popup`
+
+```markdown
+### [ポップアップ](lua/nui/popup)
+
+![ポップアップ GIF](https://github.com/MunifTanjim/nui.nvim/wiki/media/popup.gif)
+
+```lua
+local Popup = require("nui.popup")
+local event = require("nui.utils.autocmd").event
+
+local popup = Popup({
+  enter = true,
+  focusable = true,
+  border = {
+    style = "rounded",
+  },
+  position = "50%",
+  size = {
+    width = "80%",
+    height = "60%",
+  },
+})
+
+-- コンポーネントをマウント/開く
+popup:mount()
+
+-- カーソルがバッファを離れたときにコンポーネントをアンマウント
+popup:on(event.BufLeave, function()
+  popup:unmount()
+end)
+
+-- コンテンツを設定
+vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, { "Hello World" })
+```
+
+**[`nui.popup`の詳細なドキュメントを確認する](lua/nui/popup)**
+
+**[`nui.popup`のWikiページを確認する](https://github.com/MunifTanjim/nui.nvim/wiki/nui.popup)**
