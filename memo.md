@@ -1,4 +1,6 @@
-# 使われているneovim組み込み関数の説明
+# 使われている関数など
+
+## neovimの組み込み関数
 
 `nvim_buf_get_lines`
 
@@ -160,9 +162,11 @@ nvim_get_current_buf()                                *nvim_get_current_buf()*
     バッファハンドル
 ```
 
+## nui.nvimの関数
+
 `nui.input`
 
-## [入力](lua/nui/input)
+### [入力](lua/nui/input)
 
 ![入力 GIF](https://github.com/MunifTanjim/nui.nvim/wiki/media/input.gif)
 
@@ -211,7 +215,7 @@ end)
 
 `Popup`
 
-## [ポップアップ](lua/nui/popup)
+### [ポップアップ](lua/nui/popup)
 
 ![ポップアップ GIF](https://github.com/MunifTanjim/nui.nvim/wiki/media/popup.gif)
 
