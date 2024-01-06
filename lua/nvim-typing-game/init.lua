@@ -36,9 +36,10 @@ function M.on_input_change(value)
   ui_popup.update_counter_display(new_count)
   local correct_answer = game_core.get_current_highlighted_line() -- 現在の正しい答えを取得
   -- ここで位置文字ごとにcorrect_answerをsplitして合ってるかの確認を行う
+  print(value)
   if value ~= correct_answer then
     -- エラー処理
-    game_core.increment_error_count() -- エラーカウントを増やす
+    game_core.increment_char_error_count() -- エラーカウントを増やす
     -- その他のエラーに関する処理
   end
 end

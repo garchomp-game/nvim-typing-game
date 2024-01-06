@@ -8,6 +8,7 @@ local before_buffer
 local error_count = 0
 local keystroke_count = 0
 local start_time
+local char_error_count
 
 local active_before_buffer = function()
   -- ゲーム終了後に元のバッファに戻す
@@ -61,14 +62,6 @@ function M.increment_keystroke_count()
   require('nvim-typing-game.ui.popup').update_counter_display(keystroke_count)
 end
 
-function M.get_keystroke_count()
-  return keystroke_count
-end
-
-function M.set_keystroke_count(value)
-  keystroke_count = value
-end
-
 -- core/game.lua
 function M.is_game_over()
   return is_over
@@ -76,10 +69,22 @@ function M.is_game_over()
   -- return current_line > #game_lines
 end
 
+function M.increment_char_error_count()
+  char_error_count = char_error_count + 1
+end
+
 function M.get_current_highlighted_line(line_number)
   if game_lines ~= nil then
     return game_lines[line_number]
   end
+end
+
+function M.get_keystroke_count()
+  return keystroke_count
+end
+
+function M.set_keystroke_count(value)
+  keystroke_count = value
 end
 
 function M.get_registered_words()
