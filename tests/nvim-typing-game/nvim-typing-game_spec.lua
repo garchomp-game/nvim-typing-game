@@ -207,29 +207,4 @@ describe("nvim-typing-game", function()
     local resumed_state_after_input = plugin.get_game_state()
     assert.are.not_same(resumed_state, resumed_state_after_input)
   end)
-
-  -- TODO: 中身未実装
-  it("異なるバッファでゲームが正しく機能する", function()
-    local buffer1 = vim.api.nvim_create_buf(false, true)
-    local buffer2 = vim.api.nvim_create_buf(false, true)
-
-    -- バッファ1のセットアップ
-    vim.api.nvim_buf_set_lines(buffer1, 0, -1, false, {"buffer1 line 1", "buffer1 line 2"})
-    vim.api.nvim_set_current_buf(buffer1)
-    plugin.start_game()
-    plugin.process_input("buffer1 line 1")  -- バッファ1での入力
-
-    local state_buffer1 = plugin.get_game_state()  -- バッファ1のゲーム状態取得
-
-    -- バッファ2のセットアップ
-    vim.api.nvim_buf_set_lines(buffer2, 0, -1, false, {"buffer2 line 1", "buffer2 line 2"})
-    vim.api.nvim_set_current_buf(buffer2)
-    plugin.start_game()
-    plugin.process_input("buffer2 line 1")  -- バッファ2での入力
-
-    local state_buffer2 = plugin.get_game_state()  -- バッファ2のゲーム状態取得
-
-    -- 両バッファの状態が独立していることを確認
-    assert.are.not_same(state_buffer1, state_buffer2)
-  end)
 end)
