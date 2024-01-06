@@ -87,7 +87,7 @@ describe("nvim-typing-game", function()
 
   it("誤入力後のエラーカウント増加とゲーム継続を確認", function()
     -- ゲームの初期化
-    local lines = {"line 1", "line 2", "line 3"}
+    local lines = {"line 1", "line 2", "line 3", "line 4"}
     plugin.start_game(lines)
 
     -- 正しい入力と誤った入力のシミュレート
@@ -98,15 +98,22 @@ describe("nvim-typing-game", function()
     local error_count = plugin.get_error_count()
     assert.are.equal(1, error_count)  -- 1つのエラーが記録されていることを確認
 
+    plugin.on_input_submit("line 2")
+    plugin.on_input_submit("wrong input")
+
+    -- エラー処理の検証
+    error_count = plugin.get_error_count()
+    assert.are.equal(2, error_count)  -- 1つのエラーが記録されていることを確認
+
     -- ゲームがまだ終了していないことを確認
     assert.is_false(game.is_game_over())
 
     -- 追加: 誤った入力後の進行状況を検証
     local progress_after_error = plugin.get_progress()
     local expected_progress_after_error = {
-      current_line = 2,  -- エラー後も次の行に進んでいることを確認
+      current_line = 3,  -- エラー後も次の行に進んでいることを確認
       completed = false,  -- ゲームがまだ完了していないことを確認
-      total_lines = 3
+      total_lines = 4
     }
     assert.are.same(expected_progress_after_error, progress_after_error)
   end)

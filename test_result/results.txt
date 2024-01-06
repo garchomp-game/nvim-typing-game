@@ -9,27 +9,28 @@ Success	||	nvim-typing-game 正しい入力でハイライトが次の行に移�
 Game Over!	
 Success	||	nvim-typing-game 全行入力後ゲーム終了とバッファ復帰を確認	
 Incorrect input, try again.	
+Incorrect input, try again.	
 Success	||	nvim-typing-game 誤入力後のエラーカウント増加とゲーム継続を確認	
 Success	||	nvim-typing-game 正入力による進行状況の更新を検証	
 Incorrect input, try again.	
 Fail	||	nvim-typing-game スコアや成績が正しく計算される	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:158: attempt to compare number with nil
+            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:165: attempt to compare number with nil
             
             stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:158: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:146>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:165: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:153>
             	
 Fail	||	nvim-typing-game ゲームの一時停止と再開が正しく機能する	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:181: attempt to call field 'pause_game' (a nil value)
+            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:188: attempt to call field 'pause_game' (a nil value)
             
             stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:181: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:176>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:188: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:183>
             	
 Fail	||	nvim-typing-game 異なるバッファでゲームが正しく機能する	
             ./lua/nvim-typing-game/init.lua:62: attempt to index local 'test_lines' (a nil value)
             
             stack traceback:
             	./lua/nvim-typing-game/init.lua:62: in function 'start_game'
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:212: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:205>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:219: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:212>
             	
 	
 Success: 	6	
