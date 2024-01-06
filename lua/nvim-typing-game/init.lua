@@ -52,7 +52,7 @@ function M.get_progress()
 end
 
 function M.get_error_count()
-  -- return game_core.get_error_count()
+  return game_core.get_error_count()
 end
 
 function M.start_game(test_lines)
