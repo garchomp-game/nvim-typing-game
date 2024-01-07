@@ -8,7 +8,7 @@ local before_buffer
 local error_count = 0
 local keystroke_count = 0
 local start_time
-local char_error_count
+local char_error_count = 0
 
 local active_before_buffer = function()
   -- ゲーム終了後に元のバッファに戻す
@@ -99,6 +99,10 @@ function M.get_current_line()
 end
 function M.get_error_count()
   return error_count
+end
+
+function M.get_char_error_count()
+  return char_error_count
 end
 
 return M

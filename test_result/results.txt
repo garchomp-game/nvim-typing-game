@@ -25,16 +25,9 @@ Fail	||	nvim-typing-game ゲームの一時停止と再開が正しく機能す�
             stack traceback:
             	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:188: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:183>
             	
-Fail	||	nvim-typing-game 異なるバッファでゲームが正しく機能する	
-            ./lua/nvim-typing-game/init.lua:62: attempt to index local 'test_lines' (a nil value)
-            
-            stack traceback:
-            	./lua/nvim-typing-game/init.lua:62: in function 'start_game'
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:219: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:212>
-            	
 	
 Success: 	6	
-Failed : 	3	
+Failed : 	2	
 Errors : 	0	
 ========================================	
 Tests Failed. Exit: 1	

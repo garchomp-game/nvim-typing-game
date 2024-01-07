@@ -30,17 +30,29 @@ end
 
 
 function M.on_input_change(value)
-  -- 以下、通常の処理
+  -- キーストロークカウントをインクリメント
   game_core.increment_keystroke_count()
   local new_count = game_core.get_keystroke_count()
   ui_popup.update_counter_display(new_count)
-  local correct_answer = game_core.get_current_highlighted_line() -- 現在の正しい答えを取得
-  -- ここで位置文字ごとにcorrect_answerをsplitして合ってるかの確認を行う
-  print(value)
-  if value ~= correct_answer then
-    -- エラー処理
-    game_core.increment_char_error_count() -- エラーカウントを増やす
-    -- その他のエラーに関する処理
+  local current_line = game_core.get_current_line()
+
+  -- 現在の正しい答えを取得
+  local correct_answer = game_core.get_current_highlighted_line(current_line)
+  -- 正解の文字列を1文字ずつに分割
+  local correct_chars = {}
+  -- 後でデバッグで使う関数
+  print(game_core.get_char_error_count())
+  for char in string.gmatch(correct_answer, ".") do
+    table.insert(correct_chars, char)
+  end
+
+  -- ユーザーの入力と正解を比較
+  for i = 1, #value do
+    if value:sub(i, i) ~= correct_chars[i] then
+      -- エラーカウントを増やす
+      game_core.increment_char_error_count()
+      break -- 1つのエラーを見つけたらループを抜ける
+    end
   end
 end
 
