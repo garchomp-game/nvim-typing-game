@@ -6,7 +6,9 @@ local text_popup
 
 local M = {}
 
--- init.lua の on_input_submit 関数
+--- `on_input_submit` 関数は、ユーザーが入力を送信したときに呼び出される関数です。
+-- この関数は、入力された値を処理し、ゲームの状態を更新します。
+-- @param value string ユーザーによって入力された文字列。
 function M.on_input_submit(value)
   local is_correct = game_core.process_input(value)
 
@@ -28,7 +30,9 @@ function M.on_input_submit(value)
   ui_popup.show_input_popup(M.on_input_submit, M.on_input_change)
 end
 
-
+--- `on_input_change` 関数は、ユーザーの入力が変更されるたびに呼び出される関数です。
+-- この関数は、入力された値を監視し、キーストロークのカウントを更新します。
+-- @param value string ユーザーによって入力された現在の文字列。
 function M.on_input_change(value)
   -- キーストロークカウントをインクリメント
   game_core.increment_keystroke_count()
@@ -56,6 +60,8 @@ function M.on_input_change(value)
   end
 end
 
+--- `get_progress` 関数は、ゲームの進行状況を取得します。
+-- @return table ゲームの進行状況を示すテーブル。現在の行、全体の行数、ゲームが完了したかどうかを含む。
 function M.get_progress()
   return {
     current_line = game_core.get_current_line(),
@@ -64,10 +70,15 @@ function M.get_progress()
   }
 end
 
+--- `get_error_count` 関数は、ゲーム中のエラーの総数を返します。
+-- @return number ゲーム中に発生したエラーの総数。
 function M.get_error_count()
   return game_core.get_error_count()
 end
 
+--- `start_game` 関数は、ゲームを開始するために呼び出されます。
+-- この関数は、ゲームの初期設定を行い、必要なUIコンポーネントを表示します。
+-- @param test_lines table|string テスト用の行またはコマンドライン引数。
 function M.start_game(test_lines)
   local lines
   -- コマンドから呼び出す場合は、引数にargsが含まれるため
@@ -90,10 +101,12 @@ function M.start_game(test_lines)
   end)
 end
 
+--- `get_score` 関数は、現在のスコアを取得します。
 function M.get_score()
 
 end
 
+--- `get_grade` 関数は、現在のグレードを取得します。
 function M.get_grade()
 
 end
