@@ -2,3 +2,4 @@ M.get_grade()	nvim-typing-game-help.txt	/*M.get_grade()*
 M.get_score()	nvim-typing-game-help.txt	/*M.get_score()*
 M.increment_char_error_count()	nvim-typing-game-help.txt	/*M.increment_char_error_count()*
 M.increment_keystroke_count()	nvim-typing-game-help.txt	/*M.increment_keystroke_count()*
+M.on_input_submit()	nvim-typing-game-help.txt	/*M.on_input_submit()*
