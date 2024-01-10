@@ -1,5 +1,9 @@
+M.get_error_count()	nvim-typing-game-help.txt	/*M.get_error_count()*
 M.get_grade()	nvim-typing-game-help.txt	/*M.get_grade()*
+M.get_progress()	nvim-typing-game-help.txt	/*M.get_progress()*
 M.get_score()	nvim-typing-game-help.txt	/*M.get_score()*
 M.increment_char_error_count()	nvim-typing-game-help.txt	/*M.increment_char_error_count()*
 M.increment_keystroke_count()	nvim-typing-game-help.txt	/*M.increment_keystroke_count()*
+M.on_input_change()	nvim-typing-game-help.txt	/*M.on_input_change()*
 M.on_input_submit()	nvim-typing-game-help.txt	/*M.on_input_submit()*
+M.start_game()	nvim-typing-game-help.txt	/*M.start_game()*
