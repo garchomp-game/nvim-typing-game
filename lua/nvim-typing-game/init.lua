@@ -45,7 +45,6 @@ function M.on_input_change(value)
   -- 正解の文字列を1文字ずつに分割
   local correct_chars = {}
   -- 後でデバッグで使う関数
-  print(game_core.get_char_error_count())
   for char in string.gmatch(correct_answer, ".") do
     table.insert(correct_chars, char)
   end

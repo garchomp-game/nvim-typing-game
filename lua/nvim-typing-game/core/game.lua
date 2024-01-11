@@ -30,11 +30,13 @@ end
 -- この関数は、キーストローク数、エラー数、およびゲームの所要時間を考慮して、スコアを計算します。
 -- @return number 計算されたゲームスコア。
 local calculate_score = function()
-  local time = calculate_game_duration()  -- ゲームの所要時間を取得
-  local basic_score = keystroke_count - error_count  -- 正確な入力数から誤入力数を引く
-  local time_score = math.max(0, 100 - time)  -- 時間に基づいたスコア（例：100秒以下の場合、100から時間を引いた値）
+  local time = calculate_game_duration()  -- ゲームの所要時間を取得（秒単位）
+  local keystrokes_per_minute = (keystroke_count / time) * 60  -- 1分あたりの打数
 
-  return basic_score + time_score  -- 基本スコアと時間スコアを合計
+  -- 1ミスあたり5点を減点
+  local score = keystrokes_per_minute - (char_error_count * 5)
+
+  return math.max(0, score)  -- スコアがマイナスにならないようにする
 end
 
 --- `init_game` 関数は、ゲームを初期化し、開始状態に設定します。
