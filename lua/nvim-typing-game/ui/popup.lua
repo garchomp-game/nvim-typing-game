@@ -1,13 +1,13 @@
--- ui/popup.lua
+---ui/popup.lua
 local nui_input = require("nui.input")
 local Popup = require("nui.popup")
 
 local M = {}
 
 --- `calculate_popup_position` は、ポップアップの位置を計算するローカル関数です。
--- これは、ポップアップを画面の中央に配置するための行と列の位置を計算します。
--- @param popup_height number ポップアップの高さ。
--- @return table ポップアップの位置を示す `{ row = number, col = number }` 形式のテーブル。
+---これは、ポップアップを画面の中央に配置するための行と列の位置を計算します。
+---@param popup_height number ポップアップの高さ。
+---@return table ポップアップの位置を示す `{ row = number, col = number }` 形式のテーブル。
 local function calculate_popup_position(popup_height)
   local win_height = vim.api.nvim_win_get_height(0)
   local center_row = math.floor(win_height / 2)
@@ -16,9 +16,9 @@ local function calculate_popup_position(popup_height)
 end
 
 --- `show_input_popup` 関数は、入力を受け付けるポップアップを表示します。
--- @param on_input_submit function ユーザーが入力を送信した際に呼び出される関数。
--- @param on_input_change function ユーザーの入力が変更された際に呼び出される関数。
--- @return table NUIポップアップオブジェクト。
+---@param on_input_submit function ユーザーが入力を送信した際に呼び出される関数。
+---@param on_input_change function ユーザーの入力が変更された際に呼び出される関数。
+---@return table NUIポップアップオブジェクト。
 function M.show_input_popup(on_input_submit, on_input_change)
   local input_popup = nui_input({
     position = calculate_popup_position(10),
@@ -42,9 +42,9 @@ function M.show_input_popup(on_input_submit, on_input_change)
 end
 
 --- `show_text_popup` 関数は、テキストを表示するポップアップを作成し、表示します。
--- @param current_line number 現在の行番号。
--- @param text_lines table テキストの行を含むテーブル。
--- @return table NUIポップアップオブジェクト。
+---@param current_line number 現在の行番号。
+---@param text_lines table テキストの行を含むテーブル。
+---@return table NUIポップアップオブジェクト。
 function M.show_text_popup(current_line, text_lines)
   local text_popup = Popup({
     position = calculate_popup_position(0),
@@ -73,7 +73,7 @@ local count_buf = nil
 local count_popup = nil
 
 --- `show_counter` 関数は、カウンターを表示するポップアップを作成し、表示します。
--- @param count number 表示するカウンターの値。
+---@param count number 表示するカウンターの値。
 function M.show_counter(count)
   -- 新しいバッファを作成
   if count_popup ~= nil then
@@ -92,7 +92,7 @@ function M.show_counter(count)
 end
 
 --- `update_counter_display` 関数は、カウンターの表示を更新します。
--- @param new_count number 新しいカウンターの値。
+---@param new_count number 新しいカウンターの値。
 function M.update_counter_display(new_count)
   if count_buf then
     vim.schedule(function()

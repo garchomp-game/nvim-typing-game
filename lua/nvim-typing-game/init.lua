@@ -1,4 +1,4 @@
--- init.lua
+---init.lua
 local game_core = require("nvim-typing-game.core.game")
 local ui_popup = require("nvim-typing-game.ui.popup")
 
