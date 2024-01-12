@@ -201,10 +201,10 @@ describe("nvim-typing-game", function()
 
     -- 追加: 再開後の動作を確認
     local resumed_state = plugin.get_game_state()  -- 再開後の状態を取得
-    assert.are.not_same(paused_state, resumed_state)  -- 再開後の状態が異なることを確認
+    assert.are_not.equal(paused_state, resumed_state)  -- 再開後の状態が異なることを確認
     -- 再開後の入力に応じた状態変更を確認
     plugin.process_input("line 1")
     local resumed_state_after_input = plugin.get_game_state()
-    assert.are.not_same(resumed_state, resumed_state_after_input)
+    assert.are_not.equal(resumed_state, resumed_state_after_input)
   end)
 end)
