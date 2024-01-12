@@ -9,6 +9,7 @@ local error_count = 0
 local keystroke_count = 0
 local start_time
 local char_error_count = 0
+local result_score = 0
 
 --- `active_before_buffer` は、ゲーム終了後に元のバッファに戻るためのローカル関数です。
 ---この関数は、現在のウィンドウに対して、ゲーム開始前のバッファを設定します。
@@ -28,7 +29,6 @@ end
 
 --- `calculate_score` は、ゲームのスコアを計算するローカル関数です。
 ---この関数は、キーストローク数、エラー数、およびゲームの所要時間を考慮して、スコアを計算します。
----@return number 計算されたゲームスコア。
 local calculate_score = function()
   local time = calculate_game_duration()  -- ゲームの所要時間を取得（秒単位）
   local keystrokes_per_minute = (keystroke_count / time) * 60  -- 1分あたりの打数
@@ -36,7 +36,7 @@ local calculate_score = function()
   -- 1ミスあたり5点を減点
   local score = keystrokes_per_minute - (char_error_count * 5)
 
-  return math.max(0, score)  -- スコアがマイナスにならないようにする
+  result_score = math.max(0, score)  -- スコアがマイナスにならないようにする
 end
 
 --- `init_game` 関数は、ゲームを初期化し、開始状態に設定します。
@@ -142,6 +142,12 @@ end
 ---@return number エラーの総数。
 function M.get_char_error_count()
   return char_error_count
+end
+
+--- `get_result_score` 関数は、リザルトのスコアを返します。
+---@return number リザルトのスコア
+function M.get_result_score()
+  return result_score
 end
 
 return M

@@ -13,17 +13,24 @@ Incorrect input, try again.
 Success	||	nvim-typing-game 誤入力後のエラーカウント増加とゲーム継続を確認	
 Success	||	nvim-typing-game 正入力による進行状況の更新を検証	
 Incorrect input, try again.	
+debug print score	
+nan	
+end debug print score	
 Fail	||	nvim-typing-game スコアや成績が正しく計算される	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:165: attempt to compare number with nil
+            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:168: Expected objects to be the same.
+            Passed in:
+            (boolean) false
+            Expected:
+            (boolean) true
             
             stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:165: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:153>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:168: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:153>
             	
 Fail	||	nvim-typing-game ゲームの一時停止と再開が正しく機能する	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:188: attempt to call field 'pause_game' (a nil value)
+            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:191: attempt to call field 'pause_game' (a nil value)
             
             stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:188: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:183>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:191: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:186>
             	
 	
 Success: 	6	
