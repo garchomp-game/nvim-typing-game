@@ -138,7 +138,7 @@ Parameters ~
                            `M.get_registered_words`()
 `get_registered_words` 関数は、ゲームで使用されるテキスト行の配列を返します。
 Return ~
-`(table|nil)` テキスト行の配列。
+`(string|table|string[]|nil)` テキスト行の配列。
 
 ------------------------------------------------------------------------------
                                                      *M.get_game_lines_length()*
