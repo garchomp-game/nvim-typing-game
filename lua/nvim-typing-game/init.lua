@@ -73,12 +73,6 @@ function M.get_progress()
   }
 end
 
---- `get_error_count` 関数は、ゲーム中のエラーの総数を返します。
----@return number ゲーム中に発生したエラーの総数。
-function M.get_error_count()
-  return game_core.get_error_count()
-end
-
 --- `start_game` 関数は、ゲームを開始するために呼び出されます。
 ---この関数は、ゲームの初期設定を行い、必要なUIコンポーネントを表示します。
 ---@param test_lines table|string テスト用の行またはコマンドライン引数。

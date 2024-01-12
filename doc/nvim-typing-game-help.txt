@@ -1,5 +1,10 @@
 ==============================================================================
 ------------------------------------------------------------------------------
+                                                                     *game_core*
+                                  `game_core`
+
+
+------------------------------------------------------------------------------
                                                            *M.on_input_submit()*
                           `M.on_input_submit`({value})
 `on_input_submit` 関数は、ユーザーが入力を送信したときに呼び出される関数です。
@@ -53,19 +58,47 @@ Parameters ~
 
 ==============================================================================
 ------------------------------------------------------------------------------
+                                                                             *M*
+                                      `M`
+
+
+------------------------------------------------------------------------------
+                                                        *active_before_buffer()*
+                            `active_before_buffer`()
 `active_before_buffer` は、ゲーム終了後に元のバッファに戻るためのローカル関数です。
 
+
 ------------------------------------------------------------------------------
+                                                     *calculate_game_duration()*
+                          `calculate_game_duration`()
 `calculate_game_duration` は、ゲームの所要時間を計算するローカル関数です。
 
+Return ~
+`(number)` ゲームの所要時間（秒単位）。
+
 ------------------------------------------------------------------------------
+                                                             *calculate_score()*
+                              `calculate_score`()
 `calculate_score` は、ゲームのスコアを計算するローカル関数です。
 
-------------------------------------------------------------------------------
-`init_game` 関数は、ゲームを初期化し、開始状態に設定します。
+Return ~
+`(number)` 計算されたゲームスコア。
 
 ------------------------------------------------------------------------------
+                                                                 *M.init_game()*
+                             `M.init_game`({lines})
+`init_game` 関数は、ゲームを初期化し、開始状態に設定します。
+Parameters ~
+{lines} `(table)` ゲームで使用するテキスト行の配列。
+
+------------------------------------------------------------------------------
+                                                             *M.process_input()*
+                           `M.process_input`({line})
 `process_input` 関数は、ユーザーの入力を処理し、それが正しいかどうかを判定します。
+Parameters ~
+{line} `(string)` ユーザーによって入力されたテキスト行。
+Return ~
+`(boolean)` 入力が正しい場合は true、そうでない場合は false。
 
 ------------------------------------------------------------------------------
                                                  *M.increment_keystroke_count()*
@@ -73,7 +106,11 @@ Parameters ~
 `increment_keystroke_count` 関数は、キーストロークのカウントを1増やします。
 
 ------------------------------------------------------------------------------
+                                                              *M.is_game_over()*
+                               `M.is_game_over`()
 `is_game_over` 関数は、ゲームが終了しているかどうかを判定します。
+Return ~
+`(boolean)` ゲームが終了している場合は true、そうでない場合は false。
 
 ------------------------------------------------------------------------------
                                                 *M.increment_char_error_count()*
@@ -81,45 +118,113 @@ Parameters ~
 `increment_char_error_count` 関数は、文字入力エラーのカウントを1増やします。
 
 ------------------------------------------------------------------------------
+                                              *M.get_current_highlighted_line()*
+                `M.get_current_highlighted_line`({line_number})
 `get_current_highlighted_line` 関数は、指定された行番号のテキスト行を取得します。
+Parameters ~
+{line_number} `(number)` 取得する行の番号。
+Return ~
+`(string)` 指定された行のテキスト。
 
 ------------------------------------------------------------------------------
+                                                       *M.get_keystroke_count()*
+                           `M.get_keystroke_count`()
 `get_keystroke_count` 関数は、現在のキーストロークカウントを返します。
+Return ~
+`(number)` 現在のキーストロークカウント。
 
 ------------------------------------------------------------------------------
+                                                       *M.set_keystroke_count()*
+                        `M.set_keystroke_count`({value})
 `set_keystroke_count` 関数は、キーストロークカウントを指定した値に設定します。
+Parameters ~
+{value} `(number)` 新しいキーストロークカウントの値。
 
 ------------------------------------------------------------------------------
+                                                      *M.get_registered_words()*
+                           `M.get_registered_words`()
 `get_registered_words` 関数は、ゲームで使用されるテキスト行の配列を返します。
+Return ~
+`(table)` テキスト行の配列。
 
 ------------------------------------------------------------------------------
+                                                     *M.get_game_lines_length()*
+                          `M.get_game_lines_length`()
 `get_game_lines_length` 関数は、ゲームで使用されるテキスト行の総数を返します。
+Return ~
+`(number)` テキスト行の総数。
 
 ------------------------------------------------------------------------------
+                                                          *M.get_current_line()*
+                             `M.get_current_line`()
 `get_game_lines_length` 関数は、ゲームで使用されるテキスト行の総数を返します。
+Return ~
+`(number)` テキスト行の総数。
 
 ------------------------------------------------------------------------------
+                                                           *M.get_error_count()*
+                             `M.get_error_count`()
 `get_current_line` 関数は、現在の行番号を返します。
+Return ~
+`(number)` 現在の行番号。
 
 ------------------------------------------------------------------------------
+                                                      *M.get_char_error_count()*
+                           `M.get_char_error_count`()
 `get_error_count` 関数は、エラーの総数を返します。
+Return ~
+`(number)` エラーの総数。
 
 
 ==============================================================================
 ------------------------------------------------------------------------------
+                                                                     *nui_input*
+                                  `nui_input`
+
+
+------------------------------------------------------------------------------
+                                                    *calculate_popup_position()*
+                   `calculate_popup_position`({popup_height})
 `calculate_popup_position` は、ポップアップの位置を計算するローカル関数です。
 
+Parameters ~
+{popup_height} `(number)` ポップアップの高さ。
+Return ~
+`(table)` ポップアップの位置を示す `{ row = number, col = number }` 形式のテーブル。
+
 ------------------------------------------------------------------------------
+                                                          *M.show_input_popup()*
+           `M.show_input_popup`({on_input_submit}, {on_input_change})
 `show_input_popup` 関数は、入力を受け付けるポップアップを表示します。
+Parameters ~
+{on_input_submit} `(function)` ユーザーが入力を送信した際に呼び出される関数。
+{on_input_change} `(function)` ユーザーの入力が変更された際に呼び出される関数。
+Return ~
+`(table)` NUIポップアップオブジェクト。
 
 ------------------------------------------------------------------------------
+                                                           *M.show_text_popup()*
+               `M.show_text_popup`({current_line}, {text_lines})
 `show_text_popup` 関数は、テキストを表示するポップアップを作成し、表示します。
+Parameters ~
+{current_line} `(number)` 現在の行番号。
+{text_lines} `(table)` テキストの行を含むテーブル。
+Return ~
+`(table)` NUIポップアップオブジェクト。
 
 ------------------------------------------------------------------------------
+                                                              *M.show_counter()*
+                           `M.show_counter`({count})
 `show_counter` 関数は、カウンターを表示するポップアップを作成し、表示します。
+Parameters ~
+{count} `(number)` 表示するカウンターの値。
 
 ------------------------------------------------------------------------------
+                                                    *M.update_counter_display()*
+                    `M.update_counter_display`({new_count})
 `update_counter_display` 関数は、カウンターの表示を更新します。
+Parameters ~
+{new_count} `(number)` 新しいカウンターの値。
 
 
  vim:tw=78:ts=8:noet:ft=help:norl:

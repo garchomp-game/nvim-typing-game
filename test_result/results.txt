@@ -2,7 +2,7 @@ Starting...
 Scheduling: tests/nvim-typing-game/nvim-typing-game_spec.lua
 
 ========================================	
-Testing: 	/home/garchomp-game/.config/nvim/pack/nvim-typing-game/tests/nvim-typing-game/nvim-typing-game_spec.lua	
+Testing: 	/home/otoka/.config/nvim/pack/nvim-typing-game/tests/nvim-typing-game/nvim-typing-game_spec.lua	
 Success	||	nvim-typing-game カーソルがN行目にある場合、0-indexedでN-1を返す	
 Success	||	nvim-typing-game ゲーム開始時、カーソル位置以下の行がゲームに登録される	
 Success	||	nvim-typing-game 正しい入力でハイライトが次の行に移動する	

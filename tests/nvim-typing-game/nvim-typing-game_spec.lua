@@ -95,14 +95,14 @@ describe("nvim-typing-game", function()
     plugin.on_input_submit("wrong input")
 
     -- エラー処理の検証
-    local error_count = plugin.get_error_count()
+    local error_count = game.get_error_count()
     assert.are.equal(1, error_count)  -- 1つのエラーが記録されていることを確認
 
     plugin.on_input_submit("line 2")
     plugin.on_input_submit("wrong input")
 
     -- エラー処理の検証
-    error_count = plugin.get_error_count()
+    error_count = game.get_error_count()
     assert.are.equal(2, error_count)  -- 1つのエラーが記録されていることを確認
 
     -- ゲームがまだ終了していないことを確認
