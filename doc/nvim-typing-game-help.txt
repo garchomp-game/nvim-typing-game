@@ -82,7 +82,7 @@ Return ~
                              `M.init_game`({lines})
 `init_game` 関数は、ゲームを初期化し、開始状態に設定します。
 Parameters ~
-{lines} `(table)` ゲームで使用するテキスト行の配列。
+{lines} `(string|table|string[])` ゲームで使用するテキスト行の配列。
 
 ------------------------------------------------------------------------------
                                                              *M.process_input()*
@@ -138,7 +138,7 @@ Parameters ~
                            `M.get_registered_words`()
 `get_registered_words` 関数は、ゲームで使用されるテキスト行の配列を返します。
 Return ~
-`(table)` テキスト行の配列。
+`(table|nil)` テキスト行の配列。
 
 ------------------------------------------------------------------------------
                                                      *M.get_game_lines_length()*
@@ -201,7 +201,7 @@ Return ~
 `show_text_popup` 関数は、テキストを表示するポップアップを作成し、表示します。
 Parameters ~
 {current_line} `(number)` 現在の行番号。
-{text_lines} `(table)` テキストの行を含むテーブル。
+{text_lines} `(string|table|string[])` テキストの行を含むテーブル。
 Return ~
 `(table)` NUIポップアップオブジェクト。
 

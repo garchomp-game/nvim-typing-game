@@ -40,7 +40,7 @@ local calculate_score = function()
 end
 
 --- `init_game` 関数は、ゲームを初期化し、開始状態に設定します。
----@param lines table ゲームで使用するテキスト行の配列。
+---@param lines string|table|string[] ゲームで使用するテキスト行の配列。
 function M.init_game(lines)
   before_buffer = vim.api.nvim_get_current_buf()
   game_lines = lines
@@ -97,6 +97,8 @@ end
 function M.get_current_highlighted_line(line_number)
   if game_lines ~= nil then
     return game_lines[line_number]
+  else
+    return ""
   end
 end
 
@@ -113,7 +115,7 @@ function M.set_keystroke_count(value)
 end
 
 --- `get_registered_words` 関数は、ゲームで使用されるテキスト行の配列を返します。
----@return table テキスト行の配列。
+---@return table|nil テキスト行の配列。
 function M.get_registered_words()
   return game_lines
 end
