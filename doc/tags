@@ -3,7 +3,6 @@ M.get_char_error_count()	nvim-typing-game-help.txt	/*M.get_char_error_count()*
 M.get_current_highlighted_line()	nvim-typing-game-help.txt	/*M.get_current_highlighted_line()*
 M.get_current_line()	nvim-typing-game-help.txt	/*M.get_current_line()*
 M.get_error_count()	nvim-typing-game-help.txt	/*M.get_error_count()*
-M.get_error_count()	nvim-typing-game-help.txt	/*M.get_error_count()*
 M.get_game_lines_length()	nvim-typing-game-help.txt	/*M.get_game_lines_length()*
 M.get_grade()	nvim-typing-game-help.txt	/*M.get_grade()*
 M.get_keystroke_count()	nvim-typing-game-help.txt	/*M.get_keystroke_count()*
