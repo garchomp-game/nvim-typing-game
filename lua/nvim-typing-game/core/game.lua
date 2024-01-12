@@ -115,7 +115,7 @@ function M.set_keystroke_count(value)
 end
 
 --- `get_registered_words` 関数は、ゲームで使用されるテキスト行の配列を返します。
----@return table|nil テキスト行の配列。
+---@return string|table|string[]|nil テキスト行の配列。
 function M.get_registered_words()
   return game_lines
 end

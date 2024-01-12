@@ -21,7 +21,10 @@ function M.on_input_submit(value)
 
   if is_correct then
     text_popup:unmount()  -- 現在のテキストポップアップを閉じる
-    text_popup = ui_popup.show_text_popup(game_core.get_current_line(), game_core.get_registered_words())
+    local words = game_core.get_registered_words()
+    if words ~= nil and type(words) == "table" then
+      text_popup = ui_popup.show_text_popup(game_core.get_current_line(), words)
+    end
   else
     print("Incorrect input, try again.")
   end
@@ -86,7 +89,9 @@ function M.start_game(test_lines)
     lines = test_lines
   end
   game_core.init_game(lines)
-  text_popup = ui_popup.show_text_popup(game_core.get_current_line(), lines)
+  if lines ~= nil then
+    text_popup = ui_popup.show_text_popup(game_core.get_current_line(), lines)
+  end
   ui_popup.show_input_popup(M.on_input_submit, M.on_input_change)
 
   -- この後ここにcore/gameからkeystroke取得してuiに動的表示してデバッグする
@@ -100,7 +105,7 @@ end
 
 --- `get_score` 関数は、現在のスコアを取得します。
 function M.get_score()
-
+  return game_core.calculate_score()
 end
 
 --- `get_grade` 関数は、現在のグレードを取得します。
