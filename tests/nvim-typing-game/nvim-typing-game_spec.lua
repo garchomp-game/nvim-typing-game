@@ -155,11 +155,14 @@ describe("nvim-typing-game", function()
     local lines = {"line 1", "line 2", "line 3"}
     plugin.start_game(lines)
 
+    assert.is_false(game.is_game_over())
     -- 入力をシミュレート（正確な入力と誤入力を含む）
     plugin.on_input_submit("line 1")
     plugin.on_input_submit("wrong input")  -- 誤った入力
     plugin.on_input_submit("line 2")
+    plugin.on_input_submit("line 3")
 
+    assert.is_true(game.is_game_over())
     -- スコアや成績の計算の検証
     local score = plugin.get_score()
     print("debug print score")
