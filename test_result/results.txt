@@ -15,18 +15,109 @@ Success	||	nvim-typing-game 正入力による進行状況の更新を検証
 Incorrect input, try again.	
 Game Over!	
 debug print score	
-0	
+3	
 end debug print score	
-Fail	||	nvim-typing-game スコアや成績が正しく計算される	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:174: Expected objects to be the same.
-            Passed in:
-            (boolean) false
-            Expected:
-            (boolean) true
-            
-            stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:174: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:153>
-            	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Success	||	nvim-typing-game スコアや成績が正しく計算される	
 Fail	||	nvim-typing-game ゲームの一時停止と再開が正しく機能する	
             ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:194: attempt to call field 'pause_game' (a nil value)
             
@@ -34,8 +125,8 @@ Fail	||	nvim-typing-game ゲームの一時停止と再開が正しく機能す�
             	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:194: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:189>
             	
 	
-Success: 	6	
-Failed : 	2	
+Success: 	7	
+Failed : 	1	
 Errors : 	0	
 ========================================	
 Tests Failed. Exit: 1	

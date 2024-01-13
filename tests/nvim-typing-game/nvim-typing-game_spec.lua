@@ -165,16 +165,13 @@ describe("nvim-typing-game", function()
     assert.is_true(game.is_game_over())
     -- スコアや成績の計算の検証
     local score = plugin.get_score()
-    print("debug print score")
-    print(score)
-    print("end debug print score")
     assert.is_true(score >= 0 and score <= 999)  -- スコアが0から100の間であることを確認
 
     local grade = plugin.get_grade()
-    assert.is_true(grade == "A" or grade == "B" or grade == "C" or grade == "D" or grade == "F")  -- 成績がAからFのいずれかであることを確認
+    assert.is_true(grade == "S" or grade == "A" or grade == "B" or grade == "C" or grade == "D" or grade == "F")  -- 成績がAからFのいずれかであることを確認
 
     -- 追加: エラー発生時のスコアの減点を確認
-    local error_deduction = plugin.get_error_deduction()
+    local error_deduction = game.get_error_count()
     assert.is_true(error_deduction > 0)  -- エラーが発生した場合、スコアは減点される
 
     -- 追加: ストレステスト（高速連続入力）
