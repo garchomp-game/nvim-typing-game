@@ -1,0 +1,14 @@
+{
+  "lua.runtime.version": "LuaJIT",
+  "lua.diagnostics.globals": ["vim", "require"],
+  "lua.workspace.library": {
+    "/path/to/your/lazy.nvim/plugin": true,
+    "/path/to/neovim/config/lua": true,
+    "/path/to/vimruntime/lua": true,
+    "/path/to/3rd/luv/library": true,
+    "/path/to/3rd/busted/library": true,
+    "/path/to/3rd/luassert/library": true
+  },
+  "lua.workspace.checkThirdParty": false,
+  "lua.telemetry.enable": false
+}
