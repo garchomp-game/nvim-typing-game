@@ -2,7 +2,6 @@
 ---@field game Game ゲームのロジックを扱うGameクラスのインスタンス
 ---@field ui_popup UiPopup ユーザーインターフェースの表示を扱うUiPopupクラスのインスタンス
 ---@field text_popup table テキスト表示用のポップアップオブジェクト
-
 local GameRunner = {}
 GameRunner.__index = GameRunner
 
@@ -81,7 +80,6 @@ function GameRunner:get_progress()
     current_line = self.game:get_current_line(),
     total_lines = self.game:get_game_lines_length(),  -- 全体の行数
     completed = self.game:is_game_over(),
-    -- completed2 = self.game:is_game_over2() -- ←ここで出てほしい
   }
 end
 
