@@ -15,6 +15,7 @@ Game:init_game()	nvim-typing-game-help.txt	/*Game:init_game()*
 Game:is_game_over()	nvim-typing-game-help.txt	/*Game:is_game_over()*
 Game:process_input()	nvim-typing-game-help.txt	/*Game:process_input()*
 Game:set_keystroke_count()	nvim-typing-game-help.txt	/*Game:set_keystroke_count()*
+GameRunner	nvim-typing-game-help.txt	/*GameRunner*
 GameRunner:get_progress()	nvim-typing-game-help.txt	/*GameRunner:get_progress()*
 GameRunner:on_input_change()	nvim-typing-game-help.txt	/*GameRunner:on_input_change()*
 GameRunner:on_input_submit()	nvim-typing-game-help.txt	/*GameRunner:on_input_submit()*
