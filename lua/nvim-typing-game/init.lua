@@ -3,13 +3,17 @@
 ---@field ui_popup UiPopup ユーザーインターフェースの表示を扱うUiPopupクラスのインスタンス
 ---@field text_popup table テキスト表示用のポップアップオブジェクト
 
+local GameClass = require("nvim-typing-game.core.game")
+game = GameClass.new()
+
+local UiPopup = require("nvim-typing-game.ui.popup").new()
+local ui_popup = UiPopup.new()
+
 local GameRunner = {}
 GameRunner.__index = GameRunner
 
 function GameRunner.new()
   local self = setmetatable({}, GameRunner)
-  self.game = require("nvim-typing-game.core.game").new()
-  self.ui_popup = require("nvim-typing-game.ui.popup").new()
   self.text_popup = nil
   return self
 end
@@ -18,10 +22,10 @@ end
 ---この関数は、入力された値を処理し、ゲームの状態を更新します。
 ---@param value string ユーザーによって入力された文字列。
 function GameRunner:on_input_submit(value)
-  local is_correct = self.game:process_input(value)
+  local is_correct = game:process_input(value)
 
   -- ゲームが終了しているか確認
-  if self.game:is_game_over() then
+  if game:is_game_over() then
     self.text_popup:unmount()  -- テキストポップアップを閉じる
     print("Game Over!")
     return  -- ここで関数を終了させる
@@ -29,16 +33,16 @@ function GameRunner:on_input_submit(value)
 
   if is_correct then
     self.text_popup:unmount()  -- 現在のテキストポップアップを閉じる
-    local words = self.game:get_registered_words()
+    local words = game:get_registered_words()
     if words ~= nil and type(words) == "table" then
-      text_popup = self.ui_popup:show_text_popup(self.game:get_current_line(), words)
+      text_popup = ui_popup:show_text_popup(game:get_current_line(), words)
     end
   else
     print("Incorrect input, try again.")
   end
 
   -- 新しい入力ボックスを表示 (カスタムコンポーネントを使用)
-  self.ui_popup:show_input_popup(GameRunner.on_input_submit, GameRunner.on_input_change)
+  ui_popup:show_input_popup(GameRunner.on_input_submit, GameRunner.on_input_change)
 end
 
 --- `on_input_change` 関数は、ユーザーの入力が変更されるたびに呼び出される関数です。
@@ -46,13 +50,13 @@ end
 ---@param value string ユーザーによって入力された現在の文字列。
 function GameRunner:on_input_change(value)
   -- キーストロークカウントをインクリメント
-  self.game:increment_keystroke_count()
-  local new_count = self.game:get_keystroke_count()
-  self.ui_popup:update_counter_display(new_count)
-  local current_line = self.game:get_current_line()
+  game:increment_keystroke_count()
+  local new_count = game:get_keystroke_count()
+  ui_popup:update_counter_display(new_count)
+  local current_line = game:get_current_line()
 
   -- 現在の正しい答えを取得
-  local correct_answer = self.game:get_current_highlighted_line(current_line)
+  local correct_answer = game:get_current_highlighted_line(current_line)
   -- 正解の文字列を1文字ずつに分割
   local correct_chars = {}
   -- 後でデバッグで使う関数
@@ -64,7 +68,7 @@ function GameRunner:on_input_change(value)
   for i = 1, #value do
     if value:sub(i, i) ~= correct_chars[i] then
       -- エラーカウントを増やす
-      self.game:increment_char_error_count()
+      game:increment_char_error_count()
       break -- 1つのエラーを見つけたらループを抜ける
     end
   end
@@ -78,10 +82,9 @@ end
 --- `completed` (boolean): ゲームが完了したかどうか。
 function GameRunner:get_progress()
   return {
-    current_line = self.game:get_current_line(),
-    total_lines = self.game:get_game_lines_length(),  -- 全体の行数
-    completed = self.game:is_game_over(),
-    -- completed2 = self.game:is_game_over2() -- ←ここで出てほしい
+    current_line = game:get_current_line(),
+    total_lines = game:get_game_lines_length(),  -- 全体の行数
+    completed = game:is_game_over(),
   }
 end
 
@@ -97,18 +100,18 @@ function GameRunner:start_game(test_lines)
   else
     lines = test_lines
   end
-  self.game:init_game(lines)
+  game:init_game(lines)
   if lines ~= nil then
-    text_popup = self.ui_popup:show_text_popup(self.game:get_current_line(), lines)
+    text_popup = ui_popup:show_text_popup(game:get_current_line(), lines)
   end
-  self.ui_popup:show_input_popup(GameRunner.on_input_submit, GameRunner.on_input_change)
+  ui_popup:show_input_popup(GameRunner.on_input_submit, GameRunner.on_input_change)
 
   -- この後ここにcore/gameからkeystroke取得してuiに動的表示してデバッグする
-  local count = self.game:get_keystroke_count()
-  self.ui_popup:show_counter(count)
+  local count = game:get_keystroke_count()
+  ui_popup:show_counter(count)
 
   vim.schedule(function()
-    self.game:set_keystroke_count(0)
+    game:set_keystroke_count(0)
   end)
 end
 
