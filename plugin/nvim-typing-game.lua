@@ -1,19 +1,26 @@
-local typing_game = require("nvim-typing-game")
-vim.api.nvim_create_user_command('TypingGameStart', typing_game.start_game, {})
-vim.api.nvim_create_user_command('NvimTypingGenerateHelp', function()
-  -- mini.docのセットアップ（必要に応じて設定をカスタマイズ）
-  require('mini.doc').setup({
-  })
+--- nvim-typing-game.lua
+-- Neovimのタイピングゲームプラグインのメインファイル。
+-- このファイルは、ユーザーが実行可能なコマンドを定義し、ゲームの実行を開始する。
 
+local typing_game = require("nvim-typing-game")
+
+--- `TypingGameStart` コマンドは、タイピングゲームを開始します。
+vim.api.nvim_create_user_command('TypingGameStart', typing_game.start_game, {})
+
+--- `NvimTypingGenerateHelp` コマンドは、ドキュメントを生成します。
+--- ※このコマンドは開発者用です。実際にユーザーが使うことはありません。
+vim.api.nvim_create_user_command('NvimTypingGenerateHelp', function()
+  -- mini.docのセットアップ
+  require('mini.doc').setup({})
+
+  -- Luaファイルのパスと出力ファイルのパスを指定
   local home = vim.env.HOME
-  -- Luaファイルのパスを指定
   local input_files = {
+    home .. '/.config/nvim/pack/nvim-typing-game/plugin/nvim-typing-game.lua',
     home .. '/.config/nvim/pack/nvim-typing-game/lua/nvim-typing-game/init.lua',
     home .. '/.config/nvim/pack/nvim-typing-game/lua/nvim-typing-game/core/game.lua',
-    home .. '/.config/nvim/pack/nvim-typing-game/lua/nvim-typing-game/ui/popup.lua'
+    home .. '/.config/nvim/pack/nvim-typing-game/lua/nvim-typing-game/ui/popup.lua',
   }
-
-  -- 出力ファイルのパスを指定
   local output_file = home .. '/.config/nvim/pack/nvim-typing-game/doc/nvim-typing-game-help.txt'
 
   -- ドキュメント生成

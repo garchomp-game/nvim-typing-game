@@ -1,15 +1,15 @@
 local nui_input = require("nui.input")
 local Popup = require("nui.popup")
 
----@class CustomPopup
+---@class UiPopup
 ---@field lines table バッファの情報を保存
 ---@field count_buf number カウンター表示用のバッファ番号
 ---@field count_popup table カウンター表示用のポップアップオブジェクト
-local CustomPopup = {}
-CustomPopup.__index = CustomPopup
+local UiPopup = {}
+UiPopup.__index = UiPopup
 
-function CustomPopup.new()
-  local self = setmetatable({}, CustomPopup)
+function UiPopup.new()
+  local self = setmetatable({}, UiPopup)
   self.lines = nil  -- グローバルまたはモジュールスコープでバッファ番号を保存
   self.count_buf = nil
   self.count_popup = nil
@@ -31,7 +31,7 @@ end
 ---@param on_input_submit function ユーザーが入力を送信した際に呼び出される関数。
 ---@param on_input_change function ユーザーの入力が変更された際に呼び出される関数。
 ---@return table NUIポップアップオブジェクト。
-function CustomPopup:show_input_popup(on_input_submit, on_input_change)
+function UiPopup:show_input_popup(on_input_submit, on_input_change)
   local input_popup = nui_input({
     position = calculate_popup_position(10),
     size = { width = 50 },
@@ -57,7 +57,7 @@ end
 ---@param current_line number 現在の行番号。
 ---@param text_lines string|table|string[] テキストの行を含むテーブル。
 ---@return table NUIポップアップオブジェクト。
-function CustomPopup:show_text_popup(current_line, text_lines)
+function UiPopup:show_text_popup(current_line, text_lines)
   local text_popup = Popup({
     position = calculate_popup_position(0),
     size = { width = 50, height = 10 },
@@ -85,7 +85,7 @@ end
 
 --- `show_counter` 関数は、カウンターを表示するポップアップを作成し、表示します。
 ---@param count number 表示するカウンターの値。
-function CustomPopup:show_counter(count)
+function UiPopup:show_counter(count)
   -- 新しいバッファを作成
   if self.count_popup ~= nil then
     self.count_popup:unmount()
@@ -104,7 +104,7 @@ end
 
 --- `update_counter_display` 関数は、カウンターの表示を更新します。
 ---@param new_count number 新しいカウンターの値。
-function CustomPopup:update_counter_display(new_count)
+function UiPopup:update_counter_display(new_count)
   if self.count_buf then
     vim.schedule(function()
       self.lines = { tostring(new_count) }
@@ -113,4 +113,4 @@ function CustomPopup:update_counter_display(new_count)
   end
 end
 
-return CustomPopup
+return UiPopup

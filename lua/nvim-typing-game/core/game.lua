@@ -97,7 +97,8 @@ end
 function Game:increment_keystroke_count()
   keystroke_count = keystroke_count + 1
   -- UI更新関数を呼び出す
-  require('nvim-typing-game.ui.popup').update_counter_display(keystroke_count)
+  local ui_popup = require("nvim-typing-game.ui.popup").new()
+  ui_popup:update_counter_display(keystroke_count)
 end
 
 --- `is_game_over` 関数は、ゲームが終了しているかどうかを判定します。
