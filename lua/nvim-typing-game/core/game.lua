@@ -151,16 +151,16 @@ function M.get_char_error_count()
   return char_error_count
 end
 
---- `get_result_score` 関数は、リザルトのスコアを返します。
+--- `get_score` 関数は、リザルトのスコアを返します。
 ---@return number リザルトのスコア
-function M.get_result_score()
+function M.get_score()
   return result_score
 end
 
 --- `get_grade` 関数は、リザルトのスコアに基づいてグレードの情報を返します。
 --- @return string 対応するグレードの文字列
 function M.get_grade()
-  local score = M.get_result_score()
+  local score = M.get_score()
 
   if score >= 260 then
     return "S"

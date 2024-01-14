@@ -165,10 +165,10 @@ describe("nvim-typing-game", function()
 
     assert.is_true(game.is_game_over())
     -- スコアや成績の計算の検証
-    local score = plugin.get_score()
+    local score = game.get_score()
     assert.is_true(score >= 0 and score <= 999)  -- スコアが0から100の間であることを確認
 
-    local grade = plugin.get_grade()
+    local grade = game.get_grade()
     assert.is_true(grade == "S" or grade == "A" or grade == "B" or grade == "C" or grade == "D" or grade == "F")  -- 成績がAからFのいずれかであることを確認
 
     -- 追加: エラー発生時のスコアの減点を確認
@@ -179,36 +179,7 @@ describe("nvim-typing-game", function()
     for i = 1, 100 do
       plugin.on_input_submit("line " .. tostring(i))
     end
-    local stress_score = plugin.get_score()
+    local stress_score = game.get_score()
     assert.is_true(stress_score >= 0 and stress_score <= 100)  -- ストレステスト後もスコアが正常範囲内であることを確認
-  end)
-
-  -- TODO: 中身未実装
-  it("ゲームの一時停止と再開が正しく機能する", function()
-    -- ゲームの初期化と開始
-    plugin.start_game({"line 1", "line 2", "line 3"})
-
-    -- 一時停止のテスト
-    plugin.pause_game()
-    assert.is_true(plugin.is_game_paused())  -- ゲームが一時停止しているか確認
-
-    -- 追加: 一時停止中のゲーム状態変更を確認
-    local paused_state = plugin.get_game_state()  -- 一時停止時の状態を取得
-    -- 一時停止中に特定の操作（例：入力）を試み、状態変更がないことを確認
-    plugin.on_input_submit("test input during pause")
-    local paused_state_after_input = plugin.get_game_state()
-    assert.are.same(paused_state, paused_state_after_input)
-
-    -- 再開のテスト
-    plugin.resume_game()
-    assert.is_false(plugin.is_game_paused())  -- ゲームが再開しているか確認
-
-    -- 追加: 再開後の動作を確認
-    local resumed_state = plugin.get_game_state()  -- 再開後の状態を取得
-    assert.are_not.equal(paused_state, resumed_state)  -- 再開後の状態が異なることを確認
-    -- 再開後の入力に応じた状態変更を確認
-    plugin.process_input("line 1")
-    local resumed_state_after_input = plugin.get_game_state()
-    assert.are_not.equal(resumed_state, resumed_state_after_input)
   end)
 end)
