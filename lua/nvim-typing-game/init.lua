@@ -105,13 +105,12 @@ end
 
 --- `get_score` 関数は、現在のスコアを取得します。
 function M.get_score()
-  local result = game_core.get_result_score()
-  return result
+  return game_core.get_result_score()
 end
 
 --- `get_grade` 関数は、現在のグレードを取得します。
 function M.get_grade()
-
+  return game_core.get_grade()
 end
 
 return M

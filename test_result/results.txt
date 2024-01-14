@@ -14,9 +14,6 @@ Success	||	nvim-typing-game 誤入力後のエラーカウント増加とゲー�
 Success	||	nvim-typing-game 正入力による進行状況の更新を検証	
 Incorrect input, try again.	
 Game Over!	
-debug print score	
-3	
-end debug print score	
 Game Over!	
 Game Over!	
 Game Over!	
@@ -119,10 +116,10 @@ Game Over!
 Game Over!	
 Success	||	nvim-typing-game スコアや成績が正しく計算される	
 Fail	||	nvim-typing-game ゲームの一時停止と再開が正しく機能する	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:194: attempt to call field 'pause_game' (a nil value)
+            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:192: attempt to call field 'pause_game' (a nil value)
             
             stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:194: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:189>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:192: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:187>
             	
 	
 Success: 	7	

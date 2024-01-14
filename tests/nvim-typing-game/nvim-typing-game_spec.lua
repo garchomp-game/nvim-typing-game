@@ -160,6 +160,7 @@ describe("nvim-typing-game", function()
     plugin.on_input_submit("line 1")
     plugin.on_input_submit("wrong input")  -- 誤った入力
     plugin.on_input_submit("line 2")
+    assert.is_false(game.is_game_over())
     plugin.on_input_submit("line 3")
 
     assert.is_true(game.is_game_over())

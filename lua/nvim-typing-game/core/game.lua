@@ -157,4 +157,24 @@ function M.get_result_score()
   return result_score
 end
 
+--- `get_grade` 関数は、リザルトのスコアに基づいてグレードの情報を返します。
+--- @return string 対応するグレードの文字列
+function M.get_grade()
+  local score = M.get_result_score()
+
+  if score >= 260 then
+    return "S"
+  elseif score >= 220 then
+    return "A"
+  elseif score >= 170 then
+    return "B"
+  elseif score >= 120 then
+    return "C"
+  elseif score >= 70 then
+    return "D"
+  else
+    return "F"
+  end
+end
+
 return M
