@@ -2,18 +2,13 @@
 ---@field game Game ゲームのロジックを扱うGameクラスのインスタンス
 ---@field ui_popup UiPopup ユーザーインターフェースの表示を扱うUiPopupクラスのインスタンス
 ---@field text_popup table テキスト表示用のポップアップオブジェクト
-
-local GameClass = require("nvim-typing-game.core.game")
-game = GameClass.new()
-
-local UiPopup = require("nvim-typing-game.ui.popup").new()
-local ui_popup = UiPopup.new()
-
 local GameRunner = {}
 GameRunner.__index = GameRunner
 
 function GameRunner.new()
   local self = setmetatable({}, GameRunner)
+  self.game = require("nvim-typing-game.core.game").new()
+  self.ui_popup = require("nvim-typing-game.ui.popup").new()
   self.text_popup = nil
   return self
 end
@@ -82,9 +77,9 @@ end
 --- `completed` (boolean): ゲームが完了したかどうか。
 function GameRunner:get_progress()
   return {
-    current_line = game:get_current_line(),
-    total_lines = game:get_game_lines_length(),  -- 全体の行数
-    completed = game:is_game_over(),
+    current_line = self.game:get_current_line(),
+    total_lines = self.game:get_game_lines_length(),  -- 全体の行数
+    completed = self.game:is_game_over(),
   }
 end
 
