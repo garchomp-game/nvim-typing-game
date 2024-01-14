@@ -17,10 +17,10 @@ end
 ---この関数は、入力された値を処理し、ゲームの状態を更新します。
 ---@param value string ユーザーによって入力された文字列。
 function GameRunner:on_input_submit(value)
-  local is_correct = game:process_input(value)
+  local is_correct = self.game:process_input(value)
 
   -- ゲームが終了しているか確認
-  if game:is_game_over() then
+  if self.game:is_game_over() then
     self.text_popup:unmount()  -- テキストポップアップを閉じる
     print("Game Over!")
     return  -- ここで関数を終了させる
@@ -28,16 +28,16 @@ function GameRunner:on_input_submit(value)
 
   if is_correct then
     self.text_popup:unmount()  -- 現在のテキストポップアップを閉じる
-    local words = game:get_registered_words()
+    local words = self.game:get_registered_words()
     if words ~= nil and type(words) == "table" then
-      text_popup = ui_popup:show_text_popup(game:get_current_line(), words)
+      text_popup = self.ui_popup:show_text_popup(self.game:get_current_line(), words)
     end
   else
     print("Incorrect input, try again.")
   end
 
   -- 新しい入力ボックスを表示 (カスタムコンポーネントを使用)
-  ui_popup:show_input_popup(GameRunner.on_input_submit, GameRunner.on_input_change)
+  self.ui_popup:show_input_popup(GameRunner.on_input_submit, GameRunner.on_input_change)
 end
 
 --- `on_input_change` 関数は、ユーザーの入力が変更されるたびに呼び出される関数です。
@@ -45,13 +45,13 @@ end
 ---@param value string ユーザーによって入力された現在の文字列。
 function GameRunner:on_input_change(value)
   -- キーストロークカウントをインクリメント
-  game:increment_keystroke_count()
-  local new_count = game:get_keystroke_count()
-  ui_popup:update_counter_display(new_count)
-  local current_line = game:get_current_line()
+  self.game:increment_keystroke_count()
+  local new_count = self.game:get_keystroke_count()
+  self.ui_popup:update_counter_display(new_count)
+  local current_line = self.game:get_current_line()
 
   -- 現在の正しい答えを取得
-  local correct_answer = game:get_current_highlighted_line(current_line)
+  local correct_answer = self.game:get_current_highlighted_line(current_line)
   -- 正解の文字列を1文字ずつに分割
   local correct_chars = {}
   -- 後でデバッグで使う関数
@@ -63,7 +63,7 @@ function GameRunner:on_input_change(value)
   for i = 1, #value do
     if value:sub(i, i) ~= correct_chars[i] then
       -- エラーカウントを増やす
-      game:increment_char_error_count()
+      self.game:increment_char_error_count()
       break -- 1つのエラーを見つけたらループを抜ける
     end
   end
@@ -95,18 +95,18 @@ function GameRunner:start_game(test_lines)
   else
     lines = test_lines
   end
-  game:init_game(lines)
+  self.game:init_game(lines)
   if lines ~= nil then
-    text_popup = ui_popup:show_text_popup(game:get_current_line(), lines)
+    text_popup = self.ui_popup:show_text_popup(self.game:get_current_line(), lines)
   end
-  ui_popup:show_input_popup(GameRunner.on_input_submit, GameRunner.on_input_change)
+  self.ui_popup:show_input_popup(GameRunner.on_input_submit, GameRunner.on_input_change)
 
   -- この後ここにcore/gameからkeystroke取得してuiに動的表示してデバッグする
-  local count = game:get_keystroke_count()
-  ui_popup:show_counter(count)
+  local count = self.game:get_keystroke_count()
+  self.ui_popup:show_counter(count)
 
   vim.schedule(function()
-    game:set_keystroke_count(0)
+    self.game:set_keystroke_count(0)
   end)
 end
 
