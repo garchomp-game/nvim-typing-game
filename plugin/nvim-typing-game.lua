@@ -7,11 +7,16 @@ local typing_game = require("nvim-typing-game")
 --- `TypingGameStart` コマンドは、タイピングゲームを開始します。
 vim.api.nvim_create_user_command('TypingGameStart', typing_game.start_game, {})
 
---- `NvimTypingGenerateHelp` コマンドは、ドキュメントを生成します。
---- ※このコマンドは開発者用です。実際にユーザーが使うことはありません。
+-- `NvimTypingGenerateHelp` コマンドは、ドキュメントを生成します。
+-- ※このコマンドは開発者用です。実際にユーザーが使うことはありません。
 vim.api.nvim_create_user_command('NvimTypingGenerateHelp', function()
   -- mini.docのセットアップ
-  require('mini.doc').setup({})
+  local status, mini_doc = pcall(require, 'mini.doc')
+  if not status then
+    print("mini.doc is not installed.")
+    return
+  end
+  mini_doc.setup({})
 
   -- Luaファイルのパスと出力ファイルのパスを指定
   local home = vim.env.HOME
@@ -24,5 +29,5 @@ vim.api.nvim_create_user_command('NvimTypingGenerateHelp', function()
   local output_file = home .. '/.config/nvim/pack/nvim-typing-game/doc/nvim-typing-game-help.txt'
 
   -- ドキュメント生成
-  require('mini.doc').generate(input_files, output_file)
+  mini_doc.generate(input_files, output_file)
 end, {})
