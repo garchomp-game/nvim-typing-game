@@ -19,25 +19,27 @@ end
 function GameRunner:on_input_submit(value)
   local is_correct = self.game:process_input(value)
 
-  -- ゲームが終了しているか確認
   if self.game:is_game_over() then
-    self.text_popup:unmount()  -- テキストポップアップを閉じる
+    if self.text_popup then
+      self.text_popup:unmount()  -- テキストポップアップを閉じる
+    end
     print("Game Over!")
-    return  -- ここで関数を終了させる
+    return
   end
 
   if is_correct then
-    self.text_popup:unmount()  -- 現在のテキストポップアップを閉じる
+    if self.text_popup then
+      self.text_popup:unmount()  -- 現在のテキストポップアップを閉じる
+    end
     local words = self.game:get_registered_words()
     if words ~= nil and type(words) == "table" then
-      text_popup = self.ui_popup:show_text_popup(self.game:get_current_line(), words)
+      self.text_popup = self.ui_popup:show_text_popup(self.game:get_current_line(), words)
     end
   else
     print("Incorrect input, try again.")
   end
 
-  -- 新しい入力ボックスを表示 (カスタムコンポーネントを使用)
-  self.ui_popup:show_input_popup(GameRunner.on_input_submit, GameRunner.on_input_change)
+  self.ui_popup:show_input_popup(function(value) self:on_input_submit(value) end, function(value) self:on_input_change(value) end)
 end
 
 --- `on_input_change` 関数は、ユーザーの入力が変更されるたびに呼び出される関数です。

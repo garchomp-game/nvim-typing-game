@@ -37,25 +37,25 @@ end
 --- `calculate_game_duration` は、ゲームの所要時間を計算するローカル関数です。
 ---この関数は、ゲームの開始時刻と終了時刻の差（秒単位）を計算し、所要時間を返します。
 ---@return number ゲームの所要時間（秒単位）。
-local calculate_game_duration = function()
+function Game:calculate_game_duration()
   local end_time = os.time()  -- ゲーム終了時のタイムスタンプ
-  return end_time - start_time  -- 経過時間（秒単位）
+  return end_time - self.start_time  -- 経過時間（秒単位）
 end
 
 --- `calculate_score` は、ゲームのスコアを計算するローカル関数です。
 ---この関数は、キーストローク数、エラー数、およびゲームの所要時間を考慮して、スコアを計算します。
-local calculate_score = function()
-  local time = calculate_game_duration()  -- ゲームの所要時間を取得（秒単位）
+function Game:calculate_score()
+  local time = self:calculate_game_duration()  -- ゲームの所要時間を取得（秒単位）
 
   -- 時間が0の場合、スコアを0とする
   if time == 0 then
     return 0
   end
 
-  local keystrokes_per_minute = (keystroke_count / time) * 60  -- 1分あたりの打数
+  local keystrokes_per_minute = (self.keystroke_count / time) * 60  -- 1分あたりの打数
 
   -- 1ミスあたり5点を減点
-  local score = keystrokes_per_minute - (char_error_count * 5)
+  local score = keystrokes_per_minute - (self.char_error_count * 5)
 
   -- スコアがマイナスにならないようにする
   return math.max(0, score)
@@ -68,7 +68,7 @@ function Game:init_game(lines)
   game_lines = lines
   current_line = 1
   is_over = false
-  start_time = os.time()
+  self.start_time = os.time()
 end
 
 --- `process_input` 関数は、ユーザーの入力を処理し、それが正しいかどうかを判定します。
@@ -88,7 +88,7 @@ function Game:process_input(line)
       active_before_buffer()
     end
   else
-    error_count = error_count + 1
+    self.error_count = self.error_count + 1
   end
   return is_correct
 end
@@ -111,7 +111,7 @@ end
 
 --- `increment_char_error_count` 関数は、文字入力エラーのカウントを1増やします。
 function Game:increment_char_error_count()
-  char_error_count = char_error_count + 1
+  self.char_error_count = self.char_error_count + 1
 end
 
 --- `get_current_highlighted_line` 関数は、指定された行番号のテキスト行を取得します。
@@ -158,13 +158,13 @@ end
 --- `get_current_line` 関数は、現在の行番号を返します。
 ---@return number 現在の行番号。
 function Game:get_error_count()
-  return error_count
+  return self.error_count
 end
 
 --- `get_error_count` 関数は、エラーの総数を返します。
 ---@return number エラーの総数。
 function Game:get_char_error_count()
-  return char_error_count
+  return self.char_error_count
 end
 
 --- `get_score` 関数は、リザルトのスコアを返します。

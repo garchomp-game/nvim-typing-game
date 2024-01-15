@@ -1,5 +1,5 @@
-local plugin = require("nvim-typing-game")
-local game = require("nvim-typing-game:core.game")
+local plugin = require("nvim-typing-game").new()
+local game = require("nvim-typing-game.core.game").new()
 
 describe("nvim-typing-game", function()
   it("カーソルがN行目にある場合、0-indexedでN-1を返す", function()
