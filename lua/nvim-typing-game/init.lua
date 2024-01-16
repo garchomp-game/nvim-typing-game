@@ -76,7 +76,7 @@ function GameRunner:on_input_change(value)
 end
 
 --- ゲームの進行状況を取得する関数
---- @return table any ゲームの進行状況を示すテーブル。
+--- @return table ゲームの進行状況を示すテーブル。
 --- 戻り値のテーブルのフィールド:
 --- `current_line` (number): 現在の行番号。
 --- `total_lines` (number): 全行数。

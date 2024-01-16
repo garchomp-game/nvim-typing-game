@@ -37,7 +37,7 @@ Parameters ~
                                                      *GameRunner:get_progress()*
                           `GameRunner:get_progress`()
 ゲームの進行状況を取得する関数
-@return table any ゲームの進行状況を示すテーブル。
+@return table ゲームの進行状況を示すテーブル。
 戻り値のテーブルのフィールド:
 `current_line` (number): 現在の行番号。
 `total_lines` (number): 全行数。
@@ -51,6 +51,42 @@ Parameters ~
 Parameters ~
 {test_lines} `(table|string)` テスト用の行またはコマンドライン引数。
 
+------------------------------------------------------------------------------
+                                             *GameRunner:get_registered_words()*
+                      `GameRunner:get_registered_words`()
+`get_registered_words` 関数は、Gameクラスのget_registered_wordsを返します。
+@return string[]|table|string|nil get_registered_words Gameクラスのget_registered_words
+
+------------------------------------------------------------------------------
+                                     *GameRunner:get_current_highlighted_line()*
+               `GameRunner:get_current_highlighted_line`({value})
+`get_current_highlighted_line` 関数は、Gameクラスのget_current_highlighted_lineを返します
+@return string get_current_highlighted_line 指定された行のテキスト 
+
+------------------------------------------------------------------------------
+                                                     *GameRunner:is_game_over()*
+                          `GameRunner:is_game_over`()
+`is_game_over` は、Gameクラスのis_game_overを返します。
+@return boolean is_game_over game overだったらtrue
+
+------------------------------------------------------------------------------
+                                                  *GameRunner:get_error_count()*
+                         `GameRunner:get_error_count`()
+`get_error_count` は、Gameクラスのget_error_countを返します
+@return number get_error_count Gameクラスのget_error_count
+
+------------------------------------------------------------------------------
+                                                        *GameRunner:get_score()*
+                            `GameRunner:get_score`()
+`get_score` は、Gameクラスのget_scoreを返します
+@return number get_score Gameクラスのget_score
+
+------------------------------------------------------------------------------
+                                                        *GameRunner:get_grade()*
+                            `GameRunner:get_grade`()
+`get_grade` は、Gameクラスのget_gradeを返します
+@return string get_grade Gameクラスのget_grade
+
 
 ==============================================================================
 ------------------------------------------------------------------------------
@@ -59,7 +95,7 @@ Parameters ~
 Class ~
 {Game}
 Fields ~
-{game_lines} `(string[]|nil)` ゲームで使用されるテキスト行の配列
+{game_lines} `(string[]|table|string)` ゲームで使用されるテキスト行の配列
 {current_line} `(number)` 現在のテキスト行番号
 {is_over} `(boolean)` ゲームが終了したかどうか
 {before_buffer} `(number)` ゲーム開始前のバッファID
@@ -76,22 +112,22 @@ Return ~
 Game
 
 ------------------------------------------------------------------------------
-                                                        *active_before_buffer()*
-                            `active_before_buffer`()
+                                                   *Game:active_before_buffer()*
+                         `Game:active_before_buffer`()
 `active_before_buffer` は、ゲーム終了後に元のバッファに戻るためのローカル関数です。
 
 
 ------------------------------------------------------------------------------
-                                                     *calculate_game_duration()*
-                          `calculate_game_duration`()
+                                                *Game:calculate_game_duration()*
+                        `Game:calculate_game_duration`()
 `calculate_game_duration` は、ゲームの所要時間を計算するローカル関数です。
 
 Return ~
 `(number)` ゲームの所要時間（秒単位）。
 
 ------------------------------------------------------------------------------
-                                                             *calculate_score()*
-                              `calculate_score`()
+                                                        *Game:calculate_score()*
+                            `Game:calculate_score`()
 `calculate_score` は、ゲームのスコアを計算するローカル関数です。
 
 
@@ -109,7 +145,7 @@ Parameters ~
 Parameters ~
 {line} `(string)` ユーザーによって入力されたテキスト行。
 Return ~
-`(boolean)` 入力が正しい場合は true、そうでない場合は false。
+`(boolean)` is_correct 入力が正しい場合は true、そうでない場合は false。
 
 ------------------------------------------------------------------------------
                                               *Game:increment_keystroke_count()*
@@ -168,23 +204,23 @@ Return ~
 ------------------------------------------------------------------------------
                                                        *Game:get_current_line()*
                            `Game:get_current_line`()
-`get_game_lines_length` 関数は、ゲームで使用されるテキスト行の総数を返します。
-Return ~
-`(number)` テキスト行の総数。
-
-------------------------------------------------------------------------------
-                                                        *Game:get_error_count()*
-                            `Game:get_error_count`()
 `get_current_line` 関数は、現在の行番号を返します。
 Return ~
 `(number)` 現在の行番号。
 
 ------------------------------------------------------------------------------
-                                                   *Game:get_char_error_count()*
-                         `Game:get_char_error_count`()
+                                                        *Game:get_error_count()*
+                            `Game:get_error_count`()
 `get_error_count` 関数は、エラーの総数を返します。
 Return ~
 `(number)` エラーの総数。
+
+------------------------------------------------------------------------------
+                                                   *Game:get_char_error_count()*
+                         `Game:get_char_error_count`()
+`get_char_error_count` 関数は、エラーの総数を返します。
+Return ~
+`(number)` 文字単位のエラーの総数。
 
 ------------------------------------------------------------------------------
                                                               *Game:get_score()*

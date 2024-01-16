@@ -1,5 +1,8 @@
 Game	nvim-typing-game-help.txt	/*Game*
 Game.new()	nvim-typing-game-help.txt	/*Game.new()*
+Game:active_before_buffer()	nvim-typing-game-help.txt	/*Game:active_before_buffer()*
+Game:calculate_game_duration()	nvim-typing-game-help.txt	/*Game:calculate_game_duration()*
+Game:calculate_score()	nvim-typing-game-help.txt	/*Game:calculate_score()*
 Game:get_char_error_count()	nvim-typing-game-help.txt	/*Game:get_char_error_count()*
 Game:get_current_highlighted_line()	nvim-typing-game-help.txt	/*Game:get_current_highlighted_line()*
 Game:get_current_line()	nvim-typing-game-help.txt	/*Game:get_current_line()*
@@ -16,7 +19,13 @@ Game:is_game_over()	nvim-typing-game-help.txt	/*Game:is_game_over()*
 Game:process_input()	nvim-typing-game-help.txt	/*Game:process_input()*
 Game:set_keystroke_count()	nvim-typing-game-help.txt	/*Game:set_keystroke_count()*
 GameRunner	nvim-typing-game-help.txt	/*GameRunner*
+GameRunner:get_current_highlighted_line()	nvim-typing-game-help.txt	/*GameRunner:get_current_highlighted_line()*
+GameRunner:get_error_count()	nvim-typing-game-help.txt	/*GameRunner:get_error_count()*
+GameRunner:get_grade()	nvim-typing-game-help.txt	/*GameRunner:get_grade()*
 GameRunner:get_progress()	nvim-typing-game-help.txt	/*GameRunner:get_progress()*
+GameRunner:get_registered_words()	nvim-typing-game-help.txt	/*GameRunner:get_registered_words()*
+GameRunner:get_score()	nvim-typing-game-help.txt	/*GameRunner:get_score()*
+GameRunner:is_game_over()	nvim-typing-game-help.txt	/*GameRunner:is_game_over()*
 GameRunner:on_input_change()	nvim-typing-game-help.txt	/*GameRunner:on_input_change()*
 GameRunner:on_input_submit()	nvim-typing-game-help.txt	/*GameRunner:on_input_submit()*
 GameRunner:start_game()	nvim-typing-game-help.txt	/*GameRunner:start_game()*
@@ -25,7 +34,4 @@ UiPopup:show_counter()	nvim-typing-game-help.txt	/*UiPopup:show_counter()*
 UiPopup:show_input_popup()	nvim-typing-game-help.txt	/*UiPopup:show_input_popup()*
 UiPopup:show_text_popup()	nvim-typing-game-help.txt	/*UiPopup:show_text_popup()*
 UiPopup:update_counter_display()	nvim-typing-game-help.txt	/*UiPopup:update_counter_display()*
-active_before_buffer()	nvim-typing-game-help.txt	/*active_before_buffer()*
-calculate_game_duration()	nvim-typing-game-help.txt	/*calculate_game_duration()*
 calculate_popup_position()	nvim-typing-game-help.txt	/*calculate_popup_position()*
-calculate_score()	nvim-typing-game-help.txt	/*calculate_score()*
