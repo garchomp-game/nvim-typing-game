@@ -28,7 +28,7 @@ end
 
 --- `active_before_buffer` は、ゲーム終了後に元のバッファに戻るためのローカル関数です。
 ---この関数は、現在のウィンドウに対して、ゲーム開始前のバッファを設定します。
-local active_before_buffer = function()
+function Game:active_before_buffer()
   -- ゲーム終了後に元のバッファに戻す
   local current_window = vim.api.nvim_get_current_win()
   vim.api.nvim_win_set_buf(current_window, before_buffer)
@@ -84,8 +84,8 @@ function Game:process_input(line)
     is_correct = true
     if current_line > #game_lines then
       is_over = true
-      calculate_score()
-      active_before_buffer()
+      self:calculate_score()
+      self:active_before_buffer()
     end
   else
     self.error_count = self.error_count + 1
@@ -149,20 +149,20 @@ function Game:get_game_lines_length()
   return #game_lines
 end
 
---- `get_game_lines_length` 関数は、ゲームで使用されるテキスト行の総数を返します。
----@return number テキスト行の総数。
+--- `get_current_line` 関数は、現在の行番号を返します。
+---@return number 現在の行番号。
 function Game:get_current_line()
   return current_line
 end
 
---- `get_current_line` 関数は、現在の行番号を返します。
----@return number 現在の行番号。
+--- `get_error_count` 関数は、エラーの総数を返します。
+---@return number エラーの総数。
 function Game:get_error_count()
   return self.error_count
 end
 
---- `get_error_count` 関数は、エラーの総数を返します。
----@return number エラーの総数。
+--- `get_char_error_count` 関数は、エラーの総数を返します。
+---@return number 文字単位のエラーの総数。
 function Game:get_char_error_count()
   return self.char_error_count
 end

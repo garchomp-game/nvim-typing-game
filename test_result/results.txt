@@ -2,18 +2,30 @@ Starting...
 Scheduling: tests/nvim-typing-game/nvim-typing-game_spec.lua
 
 ========================================	
-Testing: 	/home/garchomp-game/.config/nvim/pack/nvim-typing-game/tests/nvim-typing-game/nvim-typing-game_spec.lua	
+Testing: 	/home/otoka/.config/nvim/pack/nvim-typing-game/tests/nvim-typing-game/nvim-typing-game_spec.lua	
 Success	||	nvim-typing-game カーソルがN行目にある場合、0-indexedでN-1を返す	
 Success	||	nvim-typing-game ゲーム開始時、カーソル位置以下の行がゲームに登録される	
+debug print	
+line 1	
+end debug print	
 Success	||	nvim-typing-game 正しい入力でハイライトが次の行に移動する	
-Fail	||	nvim-typing-game 全行入力後ゲーム終了とバッファ復帰を確認	
-            ./lua/nvim-typing-game/core/game.lua:87: attempt to call global 'calculate_score' (a nil value)
-            
-            stack traceback:
-            	./lua/nvim-typing-game/core/game.lua:87: in function 'process_input'
-            	./lua/nvim-typing-game/init.lua:20: in function 'on_input_submit'
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:66: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:54>
-            	
+debug print	
+line 1	
+end debug print	
+debug print	
+line 2	
+end debug print	
+debug print	
+line 3	
+end debug print	
+Game Over!	
+Success	||	nvim-typing-game 全行入力後ゲーム終了とバッファ復帰を確認	
+debug print	
+line 1	
+end debug print	
+debug print	
+wrong input	
+end debug print	
 Incorrect input, try again.	
 Fail	||	nvim-typing-game 誤入力後のエラーカウント増加とゲーム継続を確認	
             ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:99: Expected objects to be equal.
@@ -25,19 +37,40 @@ Fail	||	nvim-typing-game 誤入力後のエラーカウント増加とゲーム�
             stack traceback:
             	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:99: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:88>
             	
+debug print	
+line 1	
+end debug print	
+debug print	
+line 2	
+end debug print	
 Success	||	nvim-typing-game 正入力による進行状況の更新を検証	
+debug print	
+line 1	
+end debug print	
+debug print	
+wrong input	
+end debug print	
 Incorrect input, try again.	
+debug print	
+line 2	
+end debug print	
+debug print	
+line 3	
+end debug print	
+Game Over!	
 Fail	||	nvim-typing-game スコアや成績が正しく計算される	
-            ./lua/nvim-typing-game/core/game.lua:87: attempt to call global 'calculate_score' (a nil value)
+            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:176: Expected objects to be the same.
+            Passed in:
+            (boolean) false
+            Expected:
+            (boolean) true
             
             stack traceback:
-            	./lua/nvim-typing-game/core/game.lua:87: in function 'process_input'
-            	./lua/nvim-typing-game/init.lua:20: in function 'on_input_submit'
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:164: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:153>
+            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:176: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:153>
             	
 	
-Success: 	4	
-Failed : 	3	
+Success: 	5	
+Failed : 	2	
 Errors : 	0	
 ========================================	
 Tests Failed. Exit: 1	

@@ -2,10 +2,12 @@
 -- Neovimのタイピングゲームプラグインのメインファイル。
 -- このファイルは、ユーザーが実行可能なコマンドを定義し、ゲームの実行を開始する。
 
-local typing_game = require("nvim-typing-game")
+local typing_game = require("nvim-typing-game").new()
 
 --- `TypingGameStart` コマンドは、タイピングゲームを開始します。
-vim.api.nvim_create_user_command('TypingGameStart', typing_game.start_game, {})
+vim.api.nvim_create_user_command('TypingGameStart', function(args)
+  typing_game:start_game(args)
+end, {})
 
 -- `NvimTypingGenerateHelp` コマンドは、ドキュメントを生成します。
 -- ※このコマンドは開発者用です。実際にユーザーが使うことはありません。

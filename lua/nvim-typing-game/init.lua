@@ -39,7 +39,10 @@ function GameRunner:on_input_submit(value)
     print("Incorrect input, try again.")
   end
 
-  self.ui_popup:show_input_popup(function(value) self:on_input_submit(value) end, function(value) self:on_input_change(value) end)
+  self.ui_popup:show_input_popup(
+    function(submit_value) self:on_input_submit(submit_value) end,
+    function(change_value) self:on_input_change(change_value) end
+  )
 end
 
 --- `on_input_change` 関数は、ユーザーの入力が変更されるたびに呼び出される関数です。
@@ -47,6 +50,7 @@ end
 ---@param value string ユーザーによって入力された現在の文字列。
 function GameRunner:on_input_change(value)
   -- キーストロークカウントをインクリメント
+  print(value)
   self.game:increment_keystroke_count()
   local new_count = self.game:get_keystroke_count()
   self.ui_popup:update_counter_display(new_count)
