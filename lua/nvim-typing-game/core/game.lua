@@ -1,5 +1,5 @@
 ---@class Game
----@field game_lines string[]|nil ゲームで使用されるテキスト行の配列
+---@field game_lines string[]|table|string ゲームで使用されるテキスト行の配列
 ---@field current_line number 現在のテキスト行番号
 ---@field is_over boolean ゲームが終了したかどうか
 ---@field before_buffer number ゲーム開始前のバッファID
@@ -31,7 +31,7 @@ end
 function Game:active_before_buffer()
   -- ゲーム終了後に元のバッファに戻す
   local current_window = vim.api.nvim_get_current_win()
-  vim.api.nvim_win_set_buf(current_window, before_buffer)
+  vim.api.nvim_win_set_buf(current_window, self.before_buffer)
 end
 
 --- `calculate_game_duration` は、ゲームの所要時間を計算するローカル関数です。
@@ -64,26 +64,29 @@ end
 --- `init_game` 関数は、ゲームを初期化し、開始状態に設定します。
 ---@param lines string|table|string[] ゲームで使用するテキスト行の配列。
 function Game:init_game(lines)
-  before_buffer = vim.api.nvim_get_current_buf()
-  game_lines = lines
-  current_line = 1
-  is_over = false
+  print("check lines1")
+  require("util").print_table(lines)
+  print("end check lines1")
+  self.before_buffer = vim.api.nvim_get_current_buf()
+  self.game_lines = lines
+  self.current_line = 1
+  self.is_over = false
   self.start_time = os.time()
 end
 
 --- `process_input` 関数は、ユーザーの入力を処理し、それが正しいかどうかを判定します。
 ---@param line string ユーザーによって入力されたテキスト行。
----@return boolean 入力が正しい場合は true、そうでない場合は false。
+---@return boolean is_correct 入力が正しい場合は true、そうでない場合は false。
 function Game:process_input(line)
-  local is_correct = false
-  if game_lines == nil then
+  local is_correct = false -- 正誤判定用のフラグ
+  if self.game_lines == nil then
     return is_correct
   end
-  if game_lines[current_line] == line then
-    current_line = current_line + 1
+  if self.game_lines[self.current_line] == line then
+    self.current_line = self.current_line + 1
     is_correct = true
-    if current_line > #game_lines then
-      is_over = true
+    if self.current_line > #self.game_lines then
+      self.is_over = true
       self:calculate_score()
       self:active_before_buffer()
     end
@@ -95,16 +98,16 @@ end
 
 --- `increment_keystroke_count` 関数は、キーストロークのカウントを1増やします。
 function Game:increment_keystroke_count()
-  keystroke_count = keystroke_count + 1
+  self.keystroke_count = self.keystroke_count + 1
   -- UI更新関数を呼び出す
   local ui_popup = require("nvim-typing-game.ui.popup").new()
-  ui_popup:update_counter_display(keystroke_count)
+  ui_popup:update_counter_display(self.keystroke_count)
 end
 
 --- `is_game_over` 関数は、ゲームが終了しているかどうかを判定します。
 ---@return boolean ゲームが終了している場合は true、そうでない場合は false。
 function Game:is_game_over()
-  return is_over
+  return self.is_over
   -- ゲームの終了条件は、現在の行がゲーム行数よりも1大きいとき
   -- return current_line > #game_lines
 end
@@ -118,8 +121,8 @@ end
 ---@param line_number number 取得する行の番号。
 ---@return string 指定された行のテキスト。
 function Game:get_current_highlighted_line(line_number)
-  if game_lines ~= nil then
-    return game_lines[line_number]
+  if self.game_lines ~= nil then
+    return self.game_lines[line_number]
   else
     return ""
   end
@@ -128,31 +131,34 @@ end
 --- `get_keystroke_count` 関数は、現在のキーストロークカウントを返します。
 ---@return number 現在のキーストロークカウント。
 function Game:get_keystroke_count()
-  return keystroke_count
+  return self.keystroke_count
 end
 
 --- `set_keystroke_count` 関数は、キーストロークカウントを指定した値に設定します。
 ---@param value number 新しいキーストロークカウントの値。
 function Game:set_keystroke_count(value)
-  keystroke_count = value
+  self.keystroke_count = value
 end
 
 --- `get_registered_words` 関数は、ゲームで使用されるテキスト行の配列を返します。
 ---@return string|table|string[]|nil テキスト行の配列。
 function Game:get_registered_words()
-  return game_lines
+  print("check lines2")
+  print(self.game_lines)
+  print("end check lines2")
+  return self.game_lines
 end
 
 --- `get_game_lines_length` 関数は、ゲームで使用されるテキスト行の総数を返します。
 ---@return number テキスト行の総数。
 function Game:get_game_lines_length()
-  return #game_lines
+  return #self.game_lines
 end
 
 --- `get_current_line` 関数は、現在の行番号を返します。
 ---@return number 現在の行番号。
 function Game:get_current_line()
-  return current_line
+  return self.current_line
 end
 
 --- `get_error_count` 関数は、エラーの総数を返します。

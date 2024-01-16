@@ -4,73 +4,182 @@ Scheduling: tests/nvim-typing-game/nvim-typing-game_spec.lua
 ========================================	
 Testing: 	/home/otoka/.config/nvim/pack/nvim-typing-game/tests/nvim-typing-game/nvim-typing-game_spec.lua	
 Success	||	nvim-typing-game カーソルがN行目にある場合、0-indexedでN-1を返す	
+check lines1	
+1: line 1	
+2: line 2	
+3: line 3	
+4: line 4	
+end check lines1	
+check lines2	
+table: 0x41577060	
+end check lines2	
 Success	||	nvim-typing-game ゲーム開始時、カーソル位置以下の行がゲームに登録される	
-debug print	
-line 1	
-end debug print	
+check lines1	
+1: line 1	
+2: line 2	
+3: line 3	
+4: line 4	
+end check lines1	
+check lines2	
+table: 0x415856b0	
+end check lines2	
 Success	||	nvim-typing-game 正しい入力でハイライトが次の行に移動する	
-debug print	
-line 1	
-end debug print	
-debug print	
-line 2	
-end debug print	
-debug print	
-line 3	
-end debug print	
+check lines1	
+1: line 1	
+2: line 2	
+3: line 3	
+end check lines1	
+check lines2	
+table: 0x4130de70	
+end check lines2	
+check lines2	
+table: 0x4130de70	
+end check lines2	
 Game Over!	
 Success	||	nvim-typing-game 全行入力後ゲーム終了とバッファ復帰を確認	
-debug print	
-line 1	
-end debug print	
-debug print	
-wrong input	
-end debug print	
+check lines1	
+1: line 1	
+2: line 2	
+3: line 3	
+4: line 4	
+end check lines1	
+check lines2	
+table: 0x41bd6878	
+end check lines2	
 Incorrect input, try again.	
-Fail	||	nvim-typing-game 誤入力後のエラーカウント増加とゲーム継続を確認	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:99: Expected objects to be equal.
-            Passed in:
-            (number) 0
-            Expected:
-            (number) 1
-            
-            stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:99: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:88>
-            	
-debug print	
-line 1	
-end debug print	
-debug print	
-line 2	
-end debug print	
+check lines2	
+table: 0x41bd6878	
+end check lines2	
+Incorrect input, try again.	
+Success	||	nvim-typing-game 誤入力後のエラーカウント増加とゲーム継続を確認	
+check lines1	
+1: line 1	
+2: line 2	
+3: line 3	
+end check lines1	
+check lines2	
+table: 0x41315990	
+end check lines2	
+check lines2	
+table: 0x41315990	
+end check lines2	
 Success	||	nvim-typing-game 正入力による進行状況の更新を検証	
-debug print	
-line 1	
-end debug print	
-debug print	
-wrong input	
-end debug print	
+check lines1	
+1: line 1	
+2: line 2	
+3: line 3	
+end check lines1	
+check lines2	
+table: 0x41bd5060	
+end check lines2	
 Incorrect input, try again.	
-debug print	
-line 2	
-end debug print	
-debug print	
-line 3	
-end debug print	
+check lines2	
+table: 0x41bd5060	
+end check lines2	
 Game Over!	
-Fail	||	nvim-typing-game スコアや成績が正しく計算される	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:176: Expected objects to be the same.
-            Passed in:
-            (boolean) false
-            Expected:
-            (boolean) true
-            
-            stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:176: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:153>
-            	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Game Over!	
+Success	||	nvim-typing-game スコアや成績が正しく計算される	
 	
-Success: 	5	
-Failed : 	2	
+Success: 	7	
+Failed : 	0	
 Errors : 	0	
 ========================================	
-Tests Failed. Exit: 1	

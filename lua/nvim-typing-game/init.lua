@@ -103,9 +103,12 @@ function GameRunner:start_game(test_lines)
   end
   self.game:init_game(lines)
   if lines ~= nil then
-    text_popup = self.ui_popup:show_text_popup(self.game:get_current_line(), lines)
+    self.text_popup = self.ui_popup:show_text_popup(self.game:get_current_line(), lines)
   end
-  self.ui_popup:show_input_popup(GameRunner.on_input_submit, GameRunner.on_input_change)
+  self.ui_popup:show_input_popup(
+    function(submit_value) self:on_input_submit(submit_value) end,
+    function(change_value) self:on_input_change(change_value) end
+  )
 
   -- この後ここにcore/gameからkeystroke取得してuiに動的表示してデバッグする
   local count = self.game:get_keystroke_count()
@@ -114,6 +117,42 @@ function GameRunner:start_game(test_lines)
   vim.schedule(function()
     self.game:set_keystroke_count(0)
   end)
+end
+
+--- `get_registered_words` 関数は、Gameクラスのget_registered_wordsを返します。
+--- @return string[]|table|string|nil get_registered_words Gameクラスのget_registered_words
+function GameRunner:get_registered_words()
+  return self.game:get_registered_words()
+end
+
+--- `get_current_highlighted_line` 関数は、Gameクラスのget_current_highlighted_lineを返します
+--- @return string get_current_highlighted_line 指定された行のテキスト 
+function GameRunner:get_current_highlighted_line(value)
+  return self.game:get_current_highlighted_line(value)
+end
+
+--- `is_game_over` は、Gameクラスのis_game_overを返します。
+--- @return boolean is_game_over game overだったらtrue
+function GameRunner:is_game_over()
+  return self.game:is_game_over()
+end
+
+--- `get_error_count` は、Gameクラスのget_error_countを返します
+--- @return number get_error_count Gameクラスのget_error_count
+function GameRunner:get_error_count()
+  return self.game:get_error_count()
+end
+
+--- `get_score` は、Gameクラスのget_scoreを返します
+--- @return number get_score Gameクラスのget_score
+function GameRunner:get_score()
+  return self.game:get_score()
+end
+
+--- `get_grade` は、Gameクラスのget_gradeを返します
+--- @return string get_grade Gameクラスのget_grade
+function GameRunner:get_grade()
+  return self.game:get_grade()
 end
 
 return GameRunner

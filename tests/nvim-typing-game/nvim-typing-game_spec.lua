@@ -30,7 +30,7 @@ describe("nvim-typing-game", function()
     plugin:start_game(lines)
 
     -- 登録された行を取得して検証
-    local game_words = game:get_registered_words()
+    local game_words = plugin:get_registered_words()
     local expected_words = lines
     assert.are.same(expected_words, game_words)
   end)
@@ -42,12 +42,12 @@ describe("nvim-typing-game", function()
     vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
 
     plugin:start_game(lines)
-    local initial_highlight = game:get_current_highlighted_line(1)
+    local initial_highlight = plugin:get_current_highlighted_line(1)
     assert.are.equal("line 1", initial_highlight)  -- 初期ハイライトが最初の行にあることを確認
 
     -- 正しい入力を模倣
     plugin:on_input_submit("line 1")
-    local next_highlight = game:get_current_highlighted_line(2)
+    local next_highlight = plugin:get_current_highlighted_line(2)
     assert.are.equal("line 2", next_highlight)  -- ハイライトが次の行に移動していることを確認
   end)
 
@@ -67,7 +67,7 @@ describe("nvim-typing-game", function()
     end
 
     -- ゲーム終了の検証
-    assert.is_true(game:is_game_over())
+    assert.is_true(plugin:is_game_over())
 
     -- 元のバッファに戻っていることの検証
     local current_buffer = vim.api.nvim_get_current_buf()
@@ -95,18 +95,18 @@ describe("nvim-typing-game", function()
     plugin:on_input_submit("wrong input")
 
     -- エラー処理の検証
-    local error_count = game:get_error_count()
+    local error_count = plugin:get_error_count()
     assert.are.equal(1, error_count)  -- 1つのエラーが記録されていることを確認
 
     plugin:on_input_submit("line 2")
     plugin:on_input_submit("wrong input")
 
     -- エラー処理の検証
-    error_count = game:get_error_count()
+    error_count = plugin:get_error_count()
     assert.are.equal(2, error_count)  -- 1つのエラーが記録されていることを確認
 
     -- ゲームがまだ終了していないことを確認
-    assert.is_false(game:is_game_over())
+    assert.is_false(plugin:is_game_over())
 
     -- 追加: 誤った入力後の進行状況を検証
     local progress_after_error = plugin:get_progress()
@@ -155,31 +155,31 @@ describe("nvim-typing-game", function()
     local lines = {"line 1", "line 2", "line 3"}
     plugin:start_game(lines)
 
-    assert.is_false(game:is_game_over())
+    assert.is_false(plugin:is_game_over())
     -- 入力をシミュレート（正確な入力と誤入力を含む）
     plugin:on_input_submit("line 1")
     plugin:on_input_submit("wrong input")  -- 誤った入力
     plugin:on_input_submit("line 2")
-    assert.is_false(game:is_game_over())
+    assert.is_false(plugin:is_game_over())
     plugin:on_input_submit("line 3")
 
-    assert.is_true(game:is_game_over())
+    assert.is_true(plugin:is_game_over())
     -- スコアや成績の計算の検証
-    local score = game:get_score()
+    local score = plugin:get_score()
     assert.is_true(score >= 0 and score <= 999)  -- スコアが0から100の間であることを確認
 
-    local grade = game:get_grade()
+    local grade = plugin:get_grade()
     assert.is_true(grade == "S" or grade == "A" or grade == "B" or grade == "C" or grade == "D" or grade == "F")  -- 成績がAからFのいずれかであることを確認
 
     -- 追加: エラー発生時のスコアの減点を確認
-    local error_deduction = game:get_error_count()
+    local error_deduction = plugin:get_error_count()
     assert.is_true(error_deduction > 0)  -- エラーが発生した場合、スコアは減点される
 
     -- 追加: ストレステスト（高速連続入力）
     for i = 1, 100 do
       plugin:on_input_submit("line " .. tostring(i))
     end
-    local stress_score = game:get_score()
+    local stress_score = plugin:get_score()
     assert.is_true(stress_score >= 0 and stress_score <= 100)  -- ストレステスト後もスコアが正常範囲内であることを確認
   end)
 end)
