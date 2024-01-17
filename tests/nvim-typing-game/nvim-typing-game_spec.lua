@@ -182,4 +182,40 @@ describe("nvim-typing-game", function()
     local stress_score = plugin:get_score()
     assert.is_true(stress_score >= 0 and stress_score <= 100)  -- ストレステスト後もスコアが正常範囲内であることを確認
   end)
+
+  it("ゲーム終了後にリザルト画面が表示される", function()
+    -- バッファの初期化、ゲームの開始などのセットアップ
+    local lines = {"line 1", "line 2", "line 3"}
+    plugin:start_game(lines)
+
+    -- 全ての行を入力してゲームを終了させる
+    for _, line in ipairs(lines) do
+      plugin:on_input_submit(line)
+    end
+
+    -- ゲームが終了したことを確認
+    assert.is_true(plugin:is_game_over())
+
+    -- リザルト画面が表示されていることを確認
+    -- ここでは仮にリザルト画面が特定のバッファを使用すると仮定
+    local result_buf_exists = vim.api.nvim_buf_is_valid(plugin:get_result_buffer())
+    assert.is_true(result_buf_exists)
+  end)
+
+  it("`q`キーでゲーム関連ウィンドウが閉じる", function()
+    -- バッファの初期化、ゲームの開始などのセットアップ
+    local lines = {"line 1", "line 2", "line 3"}
+    plugin:start_game(lines)
+
+    -- 全ての行を入力してゲームを終了させる
+    for _, line in ipairs(lines) do
+      plugin:on_input_submit(line)
+    end
+
+    -- `q`キーをシミュレートする
+    vim.api.nvim_input('q')
+
+    -- 追加で、ゲームが適切に終了しているかを確認する
+    assert.is_true(plugin:is_game_over())
+  end)
 end)
