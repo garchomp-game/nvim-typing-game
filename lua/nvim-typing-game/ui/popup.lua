@@ -113,4 +113,35 @@ function UiPopup:update_counter_display(new_count)
   end
 end
 
+--- `show_result_popup` 関数は、リザルト画面を表示します。
+---@return table result_popup リザルト画面の情報を持ったっテーブル
+function UiPopup:show_result_popup(score, grade)
+  -- リザルト画面用のポップアップを生成
+  local result_popup = Popup({
+    position = "50%",
+    size = { width = 50, height = 10 },
+    border = { style = "rounded" },
+  })
+
+  -- ポップアップをマウント
+  result_popup:mount()
+
+  -- スコアと成績を表示するためのテキストをバッファに設定
+  local bufnr = result_popup.bufnr
+  local lines = {
+    "Your Score: " .. tostring(score),
+    "Your Grade: " .. grade
+  }
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+
+  -- 必要に応じて、さらに詳細なUIの設定や操作を行う
+
+  -- リザルト画面の情報を返す
+  return {
+    bufnr = bufnr,
+    score = lines[1],
+    grade = lines[2]
+  }
+end
+
 return UiPopup

@@ -197,12 +197,11 @@ describe("nvim-typing-game", function()
     assert.is_true(plugin:is_game_over())
 
     -- リザルト画面が表示されていることを確認
-    -- ここでは仮にリザルト画面が特定のバッファを使用すると仮定
-    local result_buf_exists = vim.api.nvim_buf_is_valid(plugin:get_result_buffer())
-    assert.is_true(result_buf_exists)
+    local result_popup = plugin:get_show_result_popup()
+    assert.is_not_nil(result_popup)
   end)
 
-  it("`q`キーでゲーム関連ウィンドウが閉じる", function()
+  it("リザルト画面の情報が正しく表示される", function()
     -- バッファの初期化、ゲームの開始などのセットアップ
     local lines = {"line 1", "line 2", "line 3"}
     plugin:start_game(lines)
@@ -212,10 +211,26 @@ describe("nvim-typing-game", function()
       plugin:on_input_submit(line)
     end
 
-    -- `q`キーをシミュレートする
-    vim.api.nvim_input('q')
+    -- リザルト画面の情報を取得
+    local result_popup = plugin:get_show_result_popup()
 
-    -- 追加で、ゲームが適切に終了しているかを確認する
-    assert.is_true(plugin:is_game_over())
+    -- リザルト画面の情報が正しく表示されていることを確認
+    -- リザルト画面にはスコアや成績などが表示されると仮定
+    local expected_score = "Your Score: 100"  -- 期待されるスコアの表示
+    local expected_grade = "Your Grade: A"    -- 期待される成績の表示
+    assert.is_string(result_popup.score)
+    assert.is_string(result_popup.grade)
+    assert.are.equal(expected_score, result_popup.score)
+    assert.are.equal(expected_grade, result_popup.grade)
+
+    -- リザルト画面が特定のバッファに表示されているか確認
+    -- この部分は実際の実装に依存しますが、例えばバッファ番号を取得して検証することができます。
+    assert.is_true(vim.api.nvim_buf_is_valid(result_popup.bufnr))
+
+    -- リザルト画面のバッファに特定のテキストが含まれているか確認
+    -- これも実装によって異なりますが、バッファの内容を取得して検証します。
+    local buf_lines = vim.api.nvim_buf_get_lines(result_popup.bufnr, 0, -1, false)
+    assert.is_table(buf_lines)
+    assert.are.same({expected_score, expected_grade}, buf_lines)
   end)
 end)

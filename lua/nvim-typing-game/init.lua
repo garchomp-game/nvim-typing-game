@@ -155,4 +155,12 @@ function GameRunner:get_grade()
   return self.game:get_grade()
 end
 
+--- `get_show_result_popup` は、リザルト画面の情報を取得します。
+--- @return table show_result_popup リザルト画面の情報
+function GameRunner:get_show_result_popup()
+  -- ui_popupモジュールのshow_result_popup関数を呼び出して、
+  -- リザルト画面を表示する
+  return self.ui_popup:show_result_popup(self.game:get_score(), self.game:get_grade())
+end
+
 return GameRunner
