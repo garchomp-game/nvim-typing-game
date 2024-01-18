@@ -141,11 +141,22 @@ function UiPopup:show_result_popup(score, grade)
   }
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
 
-  -- 必要に応じて、さらに詳細なUIの設定や操作を行う
+  -- カーソルをポップアップウィンドウに移動
+  local win_id = result_popup.winid  -- `winid` フィールドを使用
+  vim.api.nvim_set_current_win(win_id)
+  vim.api.nvim_win_set_cursor(win_id, {1, 0})  -- ポップアップの最初の行にカーソルを移動
+
+  -- qキーを押したときにポップアップを閉じるキーマッピングを設定
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '', {
+    callback = function() result_popup:unmount() end,
+    noremap = true,
+    silent = true
+  })
 
   -- リザルト画面の情報を返す
   return {
     bufnr = bufnr,
+    win_id = win_id,
     score = lines[1],
     grade = lines[2]
   }
