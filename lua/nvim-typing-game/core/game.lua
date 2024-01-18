@@ -79,7 +79,13 @@ function Game:process_input(line)
   if self.game_lines == nil then
     return is_correct
   end
-  if self.game_lines[self.current_line] == line then
+  local check_line
+  if self.current_line >= 3 then
+    check_line = 3
+  else
+    check_line = self.current_line
+  end
+  if self.game_lines[check_line] == line then
     self.current_line = self.current_line + 1
     is_correct = true
     if self.current_line > #self.game_lines then
@@ -119,7 +125,11 @@ end
 ---@return string 指定された行のテキスト。
 function Game:get_current_highlighted_line(line_number)
   if self.game_lines ~= nil then
-    return self.game_lines[line_number]
+    if line_number >= 3 then
+      return self.game_lines[3]
+    else
+      return self.game_lines[line_number]
+    end
   else
     return ""
   end
