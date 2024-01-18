@@ -25,6 +25,7 @@ GameRunner:get_grade()	nvim-typing-game-help.txt	/*GameRunner:get_grade()*
 GameRunner:get_progress()	nvim-typing-game-help.txt	/*GameRunner:get_progress()*
 GameRunner:get_registered_words()	nvim-typing-game-help.txt	/*GameRunner:get_registered_words()*
 GameRunner:get_score()	nvim-typing-game-help.txt	/*GameRunner:get_score()*
+GameRunner:get_show_result_popup()	nvim-typing-game-help.txt	/*GameRunner:get_show_result_popup()*
 GameRunner:is_game_over()	nvim-typing-game-help.txt	/*GameRunner:is_game_over()*
 GameRunner:on_input_change()	nvim-typing-game-help.txt	/*GameRunner:on_input_change()*
 GameRunner:on_input_submit()	nvim-typing-game-help.txt	/*GameRunner:on_input_submit()*
@@ -32,6 +33,8 @@ GameRunner:start_game()	nvim-typing-game-help.txt	/*GameRunner:start_game()*
 UiPopup	nvim-typing-game-help.txt	/*UiPopup*
 UiPopup:show_counter()	nvim-typing-game-help.txt	/*UiPopup:show_counter()*
 UiPopup:show_input_popup()	nvim-typing-game-help.txt	/*UiPopup:show_input_popup()*
+UiPopup:show_result_popup()	nvim-typing-game-help.txt	/*UiPopup:show_result_popup()*
 UiPopup:show_text_popup()	nvim-typing-game-help.txt	/*UiPopup:show_text_popup()*
+UiPopup:unmount_counter()	nvim-typing-game-help.txt	/*UiPopup:unmount_counter()*
 UiPopup:update_counter_display()	nvim-typing-game-help.txt	/*UiPopup:update_counter_display()*
 calculate_popup_position()	nvim-typing-game-help.txt	/*calculate_popup_position()*

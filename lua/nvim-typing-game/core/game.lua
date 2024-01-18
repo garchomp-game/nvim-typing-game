@@ -64,9 +64,6 @@ end
 --- `init_game` 関数は、ゲームを初期化し、開始状態に設定します。
 ---@param lines string|table|string[] ゲームで使用するテキスト行の配列。
 function Game:init_game(lines)
-  print("check lines1")
-  require("util").print_table(lines)
-  print("end check lines1")
   self.before_buffer = vim.api.nvim_get_current_buf()
   self.game_lines = lines
   self.current_line = 1
@@ -143,9 +140,6 @@ end
 --- `get_registered_words` 関数は、ゲームで使用されるテキスト行の配列を返します。
 ---@return string|table|string[]|nil テキスト行の配列。
 function Game:get_registered_words()
-  print("check lines2")
-  print(self.game_lines)
-  print("end check lines2")
   return self.game_lines
 end
 

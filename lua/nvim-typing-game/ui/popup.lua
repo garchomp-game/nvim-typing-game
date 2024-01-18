@@ -113,13 +113,20 @@ function UiPopup:update_counter_display(new_count)
   end
 end
 
+--- `unmount_counter` 関数は、counterをunmountする関数を実装したもの
+function UiPopup:unmount_counter()
+  self.count_popup:unmount()
+end
+
 --- `show_result_popup` 関数は、リザルト画面を表示します。
+--- @param score number スコア情報
+--- @param grade string スコアに基づいたグレード
 ---@return table result_popup リザルト画面の情報を持ったっテーブル
 function UiPopup:show_result_popup(score, grade)
   -- リザルト画面用のポップアップを生成
   local result_popup = Popup({
     position = "50%",
-    size = { width = 50, height = 10 },
+    size = { width = 20, height = 10 },
     border = { style = "rounded" },
   })
 

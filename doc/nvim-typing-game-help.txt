@@ -87,6 +87,12 @@ Parameters ~
 `get_grade` は、Gameクラスのget_gradeを返します
 @return string get_grade Gameクラスのget_grade
 
+------------------------------------------------------------------------------
+                                            *GameRunner:get_show_result_popup()*
+                      `GameRunner:get_show_result_popup`()
+`get_show_result_popup` は、リザルト画面の情報を取得します。
+@return table show_result_popup リザルト画面の情報
+
 
 ==============================================================================
 ------------------------------------------------------------------------------
@@ -290,6 +296,20 @@ Parameters ~
 `update_counter_display` 関数は、カウンターの表示を更新します。
 Parameters ~
 {new_count} `(number)` 新しいカウンターの値。
+
+------------------------------------------------------------------------------
+                                                     *UiPopup:unmount_counter()*
+                          `UiPopup:unmount_counter`()
+`unmount_counter` 関数は、counterをunmountする関数を実装したもの
+
+------------------------------------------------------------------------------
+                                                   *UiPopup:show_result_popup()*
+                 `UiPopup:show_result_popup`({score}, {grade})
+`show_result_popup` 関数は、リザルト画面を表示します。
+@param score number スコア情報
+@param grade string スコアに基づいたグレード
+Return ~
+`(table)` result_popup リザルト画面の情報を持ったっテーブル
 
 
  vim:tw=78:ts=8:noet:ft=help:norl:
