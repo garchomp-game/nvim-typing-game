@@ -4,78 +4,15 @@ Scheduling: tests/nvim-typing-game/nvim-typing-game_spec.lua
 ========================================	
 Testing: 	/home/otoka/.config/nvim/pack/nvim-typing-game/tests/nvim-typing-game/nvim-typing-game_spec.lua	
 Success	||	nvim-typing-game カーソルがN行目にある場合、0-indexedでN-1を返す	
-check lines1	
-1: line 1	
-2: line 2	
-3: line 3	
-4: line 4	
-end check lines1	
-check lines2	
-table: 0x40a2ea50	
-end check lines2	
 Success	||	nvim-typing-game ゲーム開始時、カーソル位置以下の行がゲームに登録される	
-check lines1	
-1: line 1	
-2: line 2	
-3: line 3	
-4: line 4	
-end check lines1	
-check lines2	
-table: 0x40a3d4e0	
-end check lines2	
 Success	||	nvim-typing-game 正しい入力でハイライトが次の行に移動する	
-check lines1	
-1: line 1	
-2: line 2	
-3: line 3	
-end check lines1	
-check lines2	
-table: 0x415709c8	
-end check lines2	
-check lines2	
-table: 0x415709c8	
-end check lines2	
 Game Over!	
 Success	||	nvim-typing-game 全行入力後ゲーム終了とバッファ復帰を確認	
-check lines1	
-1: line 1	
-2: line 2	
-3: line 3	
-4: line 4	
-end check lines1	
-check lines2	
-table: 0x400c8f00	
-end check lines2	
 Incorrect input, try again.	
-check lines2	
-table: 0x400c8f00	
-end check lines2	
 Incorrect input, try again.	
 Success	||	nvim-typing-game 誤入力後のエラーカウント増加とゲーム継続を確認	
-check lines1	
-1: line 1	
-2: line 2	
-3: line 3	
-end check lines1	
-check lines2	
-table: 0x400ad910	
-end check lines2	
-check lines2	
-table: 0x400ad910	
-end check lines2	
 Success	||	nvim-typing-game 正入力による進行状況の更新を検証	
-check lines1	
-1: line 1	
-2: line 2	
-3: line 3	
-end check lines1	
-check lines2	
-table: 0x40a27c00	
-end check lines2	
 Incorrect input, try again.	
-check lines2	
-table: 0x40a27c00	
-end check lines2	
 Game Over!	
 Game Over!	
 Game Over!	
@@ -178,44 +115,12 @@ Game Over!
 Game Over!	
 Game Over!	
 Success	||	nvim-typing-game スコアや成績が正しく計算される	
-check lines1	
-1: line 1	
-2: line 2	
-3: line 3	
-end check lines1	
-check lines2	
-table: 0x41fc1430	
-end check lines2	
-check lines2	
-table: 0x41fc1430	
-end check lines2	
 Game Over!	
 Success	||	nvim-typing-game ゲーム終了後にリザルト画面が表示される	
-check lines1	
-1: line 1	
-2: line 2	
-3: line 3	
-end check lines1	
-check lines2	
-table: 0x403fc040	
-end check lines2	
-check lines2	
-table: 0x403fc040	
-end check lines2	
 Game Over!	
-Fail	||	nvim-typing-game リザルト画面の情報が正しく表示される	
-            ...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:222: Expected objects to be equal.
-            Passed in:
-            (string) 'Your Score: 0'
-            Expected:
-            (string) 'Your Score: 100'
-            
-            stack traceback:
-            	...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:222: in function <...ng-game/tests/nvim-typing-game/nvim-typing-game_spec.lua:203>
-            	
+Success	||	nvim-typing-game リザルト画面の情報が正しく表示される	
 	
-Success: 	8	
-Failed : 	1	
+Success: 	9	
+Failed : 	0	
 Errors : 	0	
 ========================================	
-Tests Failed. Exit: 1	

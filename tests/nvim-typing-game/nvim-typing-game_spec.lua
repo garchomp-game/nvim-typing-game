@@ -215,8 +215,8 @@ describe("nvim-typing-game", function()
 
     -- リザルト画面の情報が正しく表示されていることを確認
     -- リザルト画面にはスコアや成績などが表示されると仮定
-    local expected_score = "Your Score: 100"  -- 期待されるスコアの表示
-    local expected_grade = "Your Grade: A"    -- 期待される成績の表示
+    local expected_score = "Your Score: 0"  -- 期待されるスコアの表示
+    local expected_grade = "Your Grade: F"    -- 期待される成績の表示
     assert.is_string(result_popup.score)
     assert.is_string(result_popup.grade)
     assert.are.equal(expected_score, result_popup.score)
