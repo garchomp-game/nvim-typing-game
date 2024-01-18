@@ -53,7 +53,6 @@ end
 ---@param value string ユーザーによって入力された現在の文字列。
 function GameRunner:on_input_change(value)
   -- キーストロークカウントをインクリメント
-  print(value)
   self.game:increment_keystroke_count()
   local new_count = self.game:get_keystroke_count()
   self.ui_popup:update_counter_display(new_count)

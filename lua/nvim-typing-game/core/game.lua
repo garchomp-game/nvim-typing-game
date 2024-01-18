@@ -75,17 +75,12 @@ end
 ---@param line string ユーザーによって入力されたテキスト行。
 ---@return boolean is_correct 入力が正しい場合は true、そうでない場合は false。
 function Game:process_input(line)
-  local is_correct = false -- 正誤判定用のフラグ
+  local is_correct = false
   if self.game_lines == nil then
     return is_correct
   end
-  local check_line
-  if self.current_line >= 3 then
-    check_line = 3
-  else
-    check_line = self.current_line
-  end
-  if self.game_lines[check_line] == line then
+
+  if self.game_lines[self.current_line] == line then
     self.current_line = self.current_line + 1
     is_correct = true
     if self.current_line > #self.game_lines then
@@ -96,6 +91,7 @@ function Game:process_input(line)
   else
     self.error_count = self.error_count + 1
   end
+
   return is_correct
 end
 
@@ -125,9 +121,14 @@ end
 ---@return string 指定された行のテキスト。
 function Game:get_current_highlighted_line(line_number)
   if self.game_lines ~= nil then
-    if line_number >= 3 then
-      return self.game_lines[3]
+    local delete_count = math.max(0, line_number - 3)
+    local display_line_index = line_number - delete_count
+
+    if display_line_index >= 3 then
+      -- ユーザーが4行目以降に到達した場合、常に3行目のテキストを返す
+      return self.game_lines[3 + delete_count]
     else
+      -- それ以外の場合は、現在の行のテキストを返す
       return self.game_lines[line_number]
     end
   else

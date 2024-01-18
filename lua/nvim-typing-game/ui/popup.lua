@@ -66,27 +66,21 @@ function UiPopup:show_text_popup(current_line, text_lines)
 
   text_popup:mount()
   local text_buf = text_popup.bufnr
+
   if type(text_lines) == "table" then
-    -- 削除すべき行数を計算（current_lineが4以上になったときに開始）
-    local delete_count = current_line - 3
-    if delete_count > 0 then
-      -- 最初のdelete_count行を削除
-      local new_text_lines = vim.list_slice(text_lines, delete_count, #text_lines)
-      vim.api.nvim_buf_set_lines(text_buf, 0, -1, false, new_text_lines)
-    else
-      vim.api.nvim_buf_set_lines(text_buf, 0, -1, false, text_lines)
+    local delete_count = math.max(0, current_line - 3)
+    local new_text_lines = vim.list_slice(text_lines, delete_count + 1, #text_lines)
+    vim.api.nvim_buf_set_lines(text_buf, 0, -1, false, new_text_lines)
+
+    -- ハイライト位置を決定
+    local highlight_line = delete_count > 0 and 3 or current_line
+    for i, _ in ipairs(new_text_lines) do
+      local highlight_group = (i == highlight_line) and "Normal" or "Comment"
+      vim.api.nvim_buf_add_highlight(text_buf, -1, highlight_group, i - 1, 0, -1)
     end
   end
   vim.api.nvim_set_option_value('modifiable', false, {buf = text_buf})
   vim.api.nvim_set_option_value('readonly', true, {buf = text_buf})
-
-  -- ハイライトを適用
-  if type(text_lines) == "table" then
-    for i, _ in ipairs(text_lines) do
-      local highlight_group = (i == current_line) and "Normal" or "Comment"
-      vim.api.nvim_buf_add_highlight(text_buf, -1, highlight_group, i - 1, 0, -1)
-    end
-  end
 
   return text_popup
 end
