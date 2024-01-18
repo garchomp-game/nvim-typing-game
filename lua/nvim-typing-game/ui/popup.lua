@@ -67,7 +67,15 @@ function UiPopup:show_text_popup(current_line, text_lines)
   text_popup:mount()
   local text_buf = text_popup.bufnr
   if type(text_lines) == "table" then
-    vim.api.nvim_buf_set_lines(text_buf, 0, -1, false, text_lines)
+    -- 削除すべき行数を計算（current_lineが4以上になったときに開始）
+    local delete_count = current_line - 3
+    if delete_count > 0 then
+      -- 最初のdelete_count行を削除
+      local new_text_lines = vim.list_slice(text_lines, delete_count + 1, #text_lines)
+      vim.api.nvim_buf_set_lines(text_buf, 0, -1, false, new_text_lines)
+    else
+      vim.api.nvim_buf_set_lines(text_buf, 0, -1, false, text_lines)
+    end
   end
   vim.api.nvim_set_option_value('modifiable', false, {buf = text_buf})
   vim.api.nvim_set_option_value('readonly', true, {buf = text_buf})
