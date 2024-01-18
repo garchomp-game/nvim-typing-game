@@ -58,7 +58,7 @@ function Game:calculate_score()
   local score = keystrokes_per_minute - (self.char_error_count * 5)
 
   -- スコアがマイナスにならないようにする
-  return math.max(0, score)
+  self.result_score = math.max(0, score)
 end
 
 --- `init_game` 関数は、ゲームを初期化し、開始状態に設定します。
