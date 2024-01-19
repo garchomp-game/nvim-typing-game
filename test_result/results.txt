@@ -6,8 +6,6 @@ Testing: 	/home/otoka/.config/nvim/pack/nvim-typing-game/tests/nvim-typing-game/
 Success	||	nvim-typing-game カーソルがN行目にある場合、0-indexedでN-1を返す	
 Success	||	nvim-typing-game ゲーム開始時、カーソル位置以下の行がゲームに登録される	
 Success	||	nvim-typing-game 正しい入力でハイライトが次の行に移動する	
-Game Over!	
-Success	||	nvim-typing-game 全行入力後ゲーム終了とバッファ復帰を確認	
 Incorrect input, try again.	
 Incorrect input, try again.	
 Success	||	nvim-typing-game 誤入力後のエラーカウント増加とゲーム継続を確認	
@@ -120,7 +118,7 @@ Success	||	nvim-typing-game ゲーム終了後にリザルト画面が表示さ�
 Game Over!	
 Success	||	nvim-typing-game リザルト画面の情報が正しく表示される	
 	
-Success: 	9	
+Success: 	8	
 Failed : 	0	
 Errors : 	0	
 ========================================	

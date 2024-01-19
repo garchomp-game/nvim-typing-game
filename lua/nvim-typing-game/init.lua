@@ -24,7 +24,10 @@ function GameRunner:on_input_submit(value)
       self.text_popup:unmount()  -- テキストポップアップを閉じる
       self.ui_popup:unmount_counter()
       self.game:calculate_score()
-      self.ui_popup:show_result_popup(self.game:get_score(), self.game:get_grade())
+      self.ui_popup:show_result_popup(
+        self.game:get_score(),
+        self.game:get_grade()
+      )
     end
     print("Game Over!")
     return
