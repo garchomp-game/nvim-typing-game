@@ -56,7 +56,9 @@ end
 ---@param value string ユーザーによって入力された現在の文字列。
 function GameRunner:on_input_change(value)
   -- 既存のキーストロークカウント処理...
-
+  self.game:increment_keystroke_count()
+  local new_count = self.game:get_keystroke_count()
+  self.ui_popup:update_counter_display(new_count)
   local current_line = self.game:get_current_line()
 
   -- 現在の正しい答えを取得
