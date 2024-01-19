@@ -55,28 +55,42 @@ end
 ---この関数は、入力された値を監視し、キーストロークのカウントを更新します。
 ---@param value string ユーザーによって入力された現在の文字列。
 function GameRunner:on_input_change(value)
-  -- キーストロークカウントをインクリメント
-  self.game:increment_keystroke_count()
-  local new_count = self.game:get_keystroke_count()
-  self.ui_popup:update_counter_display(new_count)
+  -- 既存のキーストロークカウント処理...
+
   local current_line = self.game:get_current_line()
 
   -- 現在の正しい答えを取得
   local correct_answer = self.game:get_current_highlighted_line(current_line)
-  -- 正解の文字列を1文字ずつに分割
   local correct_chars = {}
-  -- 後でデバッグで使う関数
   for char in string.gmatch(correct_answer, ".") do
     table.insert(correct_chars, char)
   end
 
-  -- ユーザーの入力と正解を比較
+  local text_buf = self.text_popup.bufnr
+  local error_detected = false
+
+  -- ユーザーの入力と正解を比較し、エラーを検出した場合にハイライトを適用
   for i = 1, #value do
     if value:sub(i, i) ~= correct_chars[i] then
-      -- エラーカウントを増やす
       self.game:increment_char_error_count()
-      break -- 1つのエラーを見つけたらループを抜ける
+
+      -- エラー検出のためにフラグをセット
+      error_detected = true
+
+      -- ハイライトを適用する行と列を決定
+      local error_line = current_line - 1  -- テキストバッファの行は0から始まる
+      local error_col = i - 1  -- 列も0から始まる
+
+      -- エラーがある文字にハイライトを適用
+      vim.api.nvim_buf_add_highlight(text_buf, -1, "ErrorMsg", error_line, error_col, error_col + 1)
+      break
     end
+  end
+
+  -- エラーが検出されなかった場合、以前のハイライトをクリア
+  if not error_detected then
+    local current_line_buf = current_line - 1
+    vim.api.nvim_buf_clear_namespace(text_buf, -1, current_line_buf, current_line_buf + 1)
   end
 end
 
