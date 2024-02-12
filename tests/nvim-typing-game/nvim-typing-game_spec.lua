@@ -200,4 +200,11 @@ describe("nvim-typing-game", function()
   end)
 
   -- <CR>を押さなくても自動で進むようにするテストケースを書いて実装する
+  it("エンター押さなくても自動で次に進むようにする", function()
+
+  end)
+
+  it("入力ボックス内でのCR禁止", function()
+
+  end)
 end)
