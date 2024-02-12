@@ -50,42 +50,6 @@ describe("nvim-typing-game", function()
     assert.are.equal("line 2", next_highlight)  -- ハイライトが次の行に移動していることを確認
   end)
 
-  -- it("全行入力後ゲーム終了とバッファ復帰を確認", function()
-  --   -- 元のバッファのハンドルを保存
-  --   local before_buffer = vim.api.nvim_get_current_buf()
-  --   local buffer = vim.api.nvim_create_buf(false, true)
-  --   local lines = {"line 1", "line 2", "line 3"}
-  --   vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
-  --
-  --   -- ゲームの初期化
-  --   plugin:start_game(lines)
-  --
-  --   -- 全ての行を入力
-  --   for _, line in ipairs(lines) do
-  --     plugin:on_input_submit(line)
-  --   end
-  --
-  --   -- ゲームの終了
-  --   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('q', true, false, true), 'n', true)
-  --   -- ゲーム終了の検証
-  --   assert.is_true(plugin:is_game_over())
-  --
-  --   -- 元のバッファに戻っていることの検証
-  --   local current_buffer = vim.api.nvim_get_current_buf()
-  --   assert.are.equal(before_buffer, current_buffer)
-  --
-  --   -- 追加: 全ての行が正確に入力されたことの検証
-  --   -- 全ての行が入力された後のゲームの状態を確認
-  --   -- 追加: 全ての行が正確に入力されたことの検証
-  --   local final_progress = plugin:get_progress()
-  --   local expected_final_progress = {
-  --     current_line = #lines + 1,
-  --     total_lines = #lines,
-  --     completed = true
-  --   }
-  --   assert.are.same(expected_final_progress, final_progress)
-  -- end)
-
   it("誤入力後のエラーカウント増加とゲーム継続を確認", function()
     -- ゲームの初期化
     local lines = {"line 1", "line 2", "line 3", "line 4"}
@@ -234,4 +198,6 @@ describe("nvim-typing-game", function()
     assert.is_table(buf_lines)
     assert.are.same({expected_score, expected_grade}, buf_lines)
   end)
+
+  -- <CR>を押さなくても自動で進むようにするテストケースを書いて実装する
 end)
