@@ -22,11 +22,12 @@ vim.api.nvim_create_user_command('NvimTypingGenerateHelp', function()
 
   -- Luaファイルのパスと出力ファイルのパスを指定
   local home = vim.env.HOME
+  local dev_plugin_path = vim.env.DEV_PLUGIN_PATH or vim.env.HOME
   local input_files = {
-    home .. '/.config/nvim/pack/nvim-typing-game/plugin/nvim-typing-game.lua',
-    home .. '/.config/nvim/pack/nvim-typing-game/lua/nvim-typing-game/init.lua',
-    home .. '/.config/nvim/pack/nvim-typing-game/lua/nvim-typing-game/core/game.lua',
-    home .. '/.config/nvim/pack/nvim-typing-game/lua/nvim-typing-game/ui/popup.lua',
+    dev_plugin_path .. '/nvim-typing-game/plugin/nvim-typing-game.lua',
+    dev_plugin_path .. '/nvim-typing-game/lua/nvim-typing-game/init.lua',
+    dev_plugin_path .. '/nvim-typing-game/lua/nvim-typing-game/core/game.lua',
+    dev_plugin_path .. '/nvim-typing-game/lua/nvim-typing-game/ui/popup.lua',
   }
   local output_file = home .. '/.config/nvim/pack/nvim-typing-game/doc/nvim-typing-game-help.txt'
 
