@@ -117,8 +117,10 @@ Game Over!
 Success	||	nvim-typing-game ゲーム終了後にリザルト画面が表示される	
 Game Over!	
 Success	||	nvim-typing-game リザルト画面の情報が正しく表示される	
+Success	||	nvim-typing-game エンター押さなくても自動で次に進むようにする	
+Success	||	nvim-typing-game 入力ボックス内でのCR禁止	
 	
-Success: 	8	
+Success: 	10	
 Failed : 	0	
 Errors : 	0	
 ========================================	
